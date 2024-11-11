@@ -59,13 +59,13 @@ public class Instructor extends Person{
 		 accreditations.add(accr);
 	 }
 	 public boolean IsAccreditate(Lesson lesson) {
-		 ////Not finished yet
 		 boolean flag = false;
 		 int i = 0;
 		 while(i<accreditations.size() && flag) {
-			 if(lesson.getType().getLessonTypeId())
+			 if(lesson.getType().getAccreditations() == getAccreditations()) {
+				 flag = true;
+			 }
 		 }
-		 
-		 return false;
+		 return flag;
 	 }
 }

@@ -1,5 +1,8 @@
 package be.sanna.SkiSchool;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class LessonType {
 
 	//Attributes
@@ -7,12 +10,14 @@ public class LessonType {
 	private static int lessonTypeNum = 1;
 	private Level level;
 	private double price;
+	private List<Accreditation> accreditations;
 	
 	//Constructor
 	public LessonType(Level lvl, double price_) {
 		this.lessonTypeId = lessonTypeNum++;
 		this.level = lvl;
 		this.price = price_;
+		this.accreditations = new ArrayList<>();
 	}
 	
 	//Getter
@@ -28,6 +33,10 @@ public class LessonType {
 		return price;
 	}
 	
+	public List<Accreditation> getAccreditations(){
+		return accreditations;
+	}
+	
 	//Setter
 	public void setLevel(Level lvl) {
 		this.level = lvl;
@@ -37,6 +46,9 @@ public class LessonType {
 		this.price = price_;
 	}
 	
+	public void setAccreditations(List<Accreditation> accrs_) {
+		this.accreditations = accrs_;
+	}
 	
 	//Methods
 }
