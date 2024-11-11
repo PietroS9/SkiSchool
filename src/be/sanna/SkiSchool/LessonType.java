@@ -11,13 +11,23 @@ public class LessonType {
 	private Level level;
 	private double price;
 	private List<Accreditation> accreditations;
+	private List<Lesson> lessons;
 	
 	//Constructor
 	public LessonType(Level lvl, double price_) {
 		this.lessonTypeId = lessonTypeNum++;
 		this.level = lvl;
 		this.price = price_;
-		this.accreditations = new ArrayList<>();
+		this.accreditations = new ArrayList<Accreditation>();
+		this.lessons = new ArrayList<Lesson>();
+	}
+	
+	public LessonType() {
+		this.lessonTypeId = lessonTypeNum++;
+		this.level = null;
+		this.price = 0;
+		this.accreditations = new ArrayList<Accreditation>();
+		this.lessons = new ArrayList<Lesson>();
 	}
 	
 	//Getter
@@ -37,6 +47,10 @@ public class LessonType {
 		return accreditations;
 	}
 	
+	public List<Lesson> getLessons(){
+		return lessons;
+	}
+	
 	//Setter
 	public void setLevel(Level lvl) {
 		this.level = lvl;
@@ -46,9 +60,24 @@ public class LessonType {
 		this.price = price_;
 	}
 	
-	public void setAccreditations(List<Accreditation> accrs_) {
-		this.accreditations = accrs_;
+	public void setAccreditations(Accreditation accr) {
+		//Not finished
+		addAccreditation(accr);
+	}
+	
+	public void setLessons(Lesson lesson) {
+		//NOt finished
+		addLesson(lesson);
 	}
 	
 	//Methods
+	public void addAccreditation(Accreditation accr) {
+		//NOt finsihed
+		accreditations.add(accr);
+	}
+	
+	public void addLesson(Lesson lesson) {
+		//NOt finished
+		lessons.add(lesson);
+	}
 }

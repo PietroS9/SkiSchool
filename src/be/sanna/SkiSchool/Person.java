@@ -17,6 +17,13 @@ public abstract class Person {
 		this.age = age_;
 	}
 	
+	public Person() {
+		this.id = personNum++;
+		this.firstName = "";
+		this.lastName = "";
+		this.age = 0;
+	}
+	
 	//Getter
 	public int getId() {
 		return id;
@@ -47,7 +54,5 @@ public abstract class Person {
 	}
 	
 	//Methods
-	
-	
 	
 }

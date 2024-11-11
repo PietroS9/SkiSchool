@@ -14,6 +14,11 @@ public class Student extends Person{
 		this.books = new ArrayList<>();
 	}
 	
+	public Student() {
+		super();
+		this.books = new ArrayList<>();
+	}
+	
 	//Getter
 	public int getId() {
 		return super.getId();
@@ -48,17 +53,19 @@ public class Student extends Person{
 		super.setAge(age_);
 	}
 	
-	public void setBooking(List<Booking> books_) {
-		if(books_ == null) {
-			throw new IllegalArgumentException("List of booking can't be null");
+	public void setBooking(Booking booking) {
+		try {
+			addBooking(booking);
 		}
-		this.books = books_;
+		catch (IllegalArgumentException e) {
+			System.out.println(e.getMessage());
+		}
 	}
 	
 	//Methods
 	public void addBooking(Booking booking_) {
 		if(booking_ == null) {
-			throw new IllegalArgumentException("Booking can't be null");
+			throw new IllegalArgumentException("Booking can't be null !");
 		}
 		this.books.add(booking_);
 	}
