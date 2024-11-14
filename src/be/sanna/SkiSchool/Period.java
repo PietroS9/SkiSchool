@@ -1,19 +1,19 @@
 package be.sanna.SkiSchool;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class Period {
 
 	//Attributes
-	private Date startDate;
-	private Date endDate;
+	private LocalDate startDate;
+	private LocalDate endDate;
 	private boolean isVacation;
 	private List<Booking> books;
 	
 	//Constructor
-	public Period(Date start, Date end, boolean isVacation_) {
+	public Period(LocalDate start, LocalDate end, boolean isVacation_) {
 		this.startDate = start;
 		this.endDate = end;
 		this.isVacation = isVacation_;
@@ -28,11 +28,11 @@ public class Period {
 	}
 	
 	//Getter
-	public Date getStartDate() {
+	public LocalDate getStartDate() {
 		return startDate;
 	}
 	
-	public Date getEndDate() {
+	public LocalDate getEndDate() {
 		return endDate;
 	}
 	
@@ -45,11 +45,11 @@ public class Period {
 	}
 	
 	//Setter
-	public void setStartDate(Date start) {
+	public void setStartDate(LocalDate start) {
 		this.startDate = start;
 	}
 	
-	public void setEndDate(Date end) {
+	public void setEndDate(LocalDate end) {
 		this.endDate = end;
 	}
 	

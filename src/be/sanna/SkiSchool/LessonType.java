@@ -61,23 +61,35 @@ public class LessonType {
 	}
 	
 	public void setAccreditations(Accreditation accr) {
-		//Not finished
-		addAccreditation(accr);
+		try {
+			addAccreditation(accr);
+		}
+		catch (IllegalArgumentException e) {
+			System.out.println(e.getMessage());
+		}
 	}
 	
 	public void setLessons(Lesson lesson) {
-		//NOt finished
-		addLesson(lesson);
+		try {
+			addLesson(lesson);
+		}
+		catch (IllegalArgumentException e) {
+			System.out.println(e.getMessage());
+		}
 	}
 	
 	//Methods
 	public void addAccreditation(Accreditation accr) {
-		//NOt finsihed
+		if(accr == null) {
+			throw new IllegalArgumentException("Accreditation can't be null !");
+		}
 		accreditations.add(accr);
 	}
 	
 	public void addLesson(Lesson lesson) {
-		//NOt finished
+		if(lesson == null) {
+			throw new IllegalArgumentException("Lesson can't be null !");
+		}
 		lessons.add(lesson);
 	}
 }

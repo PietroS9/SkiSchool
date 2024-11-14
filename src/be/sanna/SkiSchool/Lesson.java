@@ -68,10 +68,16 @@ public class Lesson {
 	}
 	
 	public void setType(LessonType type_) {
+		if(type_ == null) {
+			throw new IllegalArgumentException("Type can't be null !");
+		}
 		this.type = type_;
 	}
 	
 	public void setInstructor(Instructor instructor_) {
+		if(instructor_ == null) {
+			throw new IllegalArgumentException("Instructor can't be null !");
+		}
 		this.instructor = instructor_;
 	}
 	

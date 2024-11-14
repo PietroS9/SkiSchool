@@ -1,6 +1,6 @@
 package be.sanna.SkiSchool;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class Booking {
 
@@ -12,7 +12,7 @@ public class Booking {
 	private int duration; 
 	private boolean insurance;
 	private boolean individual;
-	private Date datePrivateLesson;
+	private LocalDate datePrivateLesson;
 	private Student student;
 	private Instructor instructor;
 	private Lesson lesson;
@@ -20,7 +20,7 @@ public class Booking {
 	
 	//Constructor
 	public Booking(Period period_, double price_, int duration_, boolean insurance_, 
-			boolean individual_, Date dpl_, Student student_, Instructor instructor_, Lesson lesson_) {
+			boolean individual_, LocalDate dpl_, Student student_, Instructor instructor_, Lesson lesson_) {
 		this.bookId = bookNum++;
 		this.period = period_;
 		this.price = price_;
@@ -71,7 +71,7 @@ public class Booking {
 		return individual;
 	}
 	
-	public Date getDatePrivateLesson() {
+	public LocalDate getDatePrivateLesson() {
 		return datePrivateLesson;
 	}
 	
@@ -108,7 +108,7 @@ public class Booking {
 		this.individual = individual_;
 	}
 	
-	public void setDatePrivateLesson(Date dpl_) {
+	public void setDatePrivateLesson(LocalDate dpl_) {
 		this.datePrivateLesson = dpl_;
 	}
 	

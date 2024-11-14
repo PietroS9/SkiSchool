@@ -1,5 +1,8 @@
 package be.sanna.SkiSchool;
 
+import java.time.LocalDate;
+import java.time.Period;
+
 public abstract class Person {
 
 	//Attributes
@@ -7,21 +10,21 @@ public abstract class Person {
 	private static int personNum = 1;
 	private String firstName;
 	private String lastName;
-	private int age;
+	private LocalDate dob;
 	
 	//Constructor
-	public Person(String fn, String ln, int age_) {
+	public Person(String fn, String ln, LocalDate dob_) {
 		this.id = personNum++;
 		this.firstName = fn;
 		this.lastName = ln;
-		this.age = age_;
+		this.dob = dob_;
 	}
 	
 	public Person() {
 		this.id = personNum++;
 		this.firstName = "";
 		this.lastName = "";
-		this.age = 0;
+		this.dob = null;
 	}
 	
 	//Getter
@@ -36,8 +39,8 @@ public abstract class Person {
 		return lastName;
 	}
 	
-	public int getAge() {
-		return age;
+	public LocalDate getDob() {
+		return dob;
 	}
 	
 	//Setter
@@ -49,10 +52,15 @@ public abstract class Person {
 		this.lastName = ln;
 	}
 	
-	public void setAge(int age_) {
-		this.age = age_;
+	public void setDob(LocalDate dob_) {
+		if(dob_ == null || dob_.isAfter(LocalDate.now())) {
+			throw new IllegalArgumentException("Invalid Date of birth !");
+		}
+		this.dob = dob_;
 	}
 	
 	//Methods
-	
+	public int CalculateAge() {
+		return Period.between(dob, LocalDate.now()).getYears();
+	}
 }

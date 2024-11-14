@@ -1,6 +1,7 @@
 package be.sanna.SkiSchool;
 
 import java.util.List;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Student extends Person{
@@ -9,8 +10,8 @@ public class Student extends Person{
 	private  List<Booking> books;
 	
 	//Constructor
-	public Student(String fn, String ln, int age_) {
-		super(fn,ln,age_);
+	public Student(String fn, String ln, LocalDate dob_) {
+		super(fn,ln,dob_);
 		this.books = new ArrayList<>();
 	}
 	
@@ -32,8 +33,8 @@ public class Student extends Person{
 		return super.getLastName();
 	}
 	
-	public int getAge() {
-		return super.getAge();
+	public LocalDate getDob() {
+		return super.getDob();
 	}
 	
 	public List<Booking> getBooking(){
@@ -49,8 +50,8 @@ public class Student extends Person{
 		super.setLastName(ln);
 	}
 	
-	public void setAge(int age_) {
-		super.setAge(age_);
+	public void setDob(LocalDate dob_) {
+		super.setDob(dob_);
 	}
 	
 	public void setBooking(Booking booking) {
@@ -70,5 +71,8 @@ public class Student extends Person{
 		this.books.add(booking_);
 	}
 	
+	public int CalculateAge() {
+		return super.CalculateAge();
+	}
 	
 }

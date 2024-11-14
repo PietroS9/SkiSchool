@@ -1,5 +1,6 @@
 package be.sanna.SkiSchool;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,8 +12,8 @@ public class Instructor extends Person{
 	private List<Booking> books;
 	
 	//Constructor
-	public Instructor(String fn, String ln, int age_, Accreditation accr) {
-		super(fn,ln,age_);
+	public Instructor(String fn, String ln, LocalDate dob_, Accreditation accr) {
+		super(fn,ln,dob_);
 		this.accreditations = new ArrayList<Accreditation>();
 		this.lessons = new ArrayList<Lesson>();
 		this.books = new ArrayList<Booking>();
@@ -44,8 +45,8 @@ public class Instructor extends Person{
 		return super.getLastName();
 	}
 	
-	public int getAge() {
-		return super.getAge();
+	public LocalDate getDob() {
+		return super.getDob();
 	}
 	
 	public List<Accreditation> getAccreditations(){
@@ -69,8 +70,8 @@ public class Instructor extends Person{
 		super.setLastName(ln);
 	}
 	
-	public void setAge(int age_) {
-		super.setAge(age_);
+	public void setDob(LocalDate dob_) {
+		super.setDob(dob_);
 	}
 	
 	public void setAccreditations(Accreditation accr) {
@@ -101,35 +102,39 @@ public class Instructor extends Person{
 	}
 	
 	//Methods
-	 public void addAccreditation(Accreditation accr) {
-		 if(accr == null) {
-			 throw new IllegalArgumentException("Accreditation can't be null !");
-		 }
-		 accreditations.add(accr);
-	 }
-	 
-	 public void addLesson(Lesson lesson_) {
-		 if(lesson_ == null) {
-			 throw new IllegalArgumentException("Lesson can't be null !");
-		 }
-		 lessons.add(lesson_);
-	 }
-	 
-	 public void addBooking(Booking booking_) {
-			if(booking_ == null) {
-				throw new IllegalArgumentException("Booking can't be null !");
-			}
-			this.books.add(booking_);
+	public int CalculateAge() {
+		return super.CalculateAge();
+	}
+	
+	public void addAccreditation(Accreditation accr) {
+		if(accr == null) {
+			throw new IllegalArgumentException("Accreditation can't be null !");
+		}
+		accreditations.add(accr);
 	}
 	 
-	 public boolean IsAccreditate(Lesson lesson) {
-		 boolean flag = false;
-		 int i = 0;
-		 while(i<accreditations.size() && flag) {
-			 if(lesson.getType().getAccreditations() == getAccreditations()) {
-				 flag = true;
-			 }
-		 }
-		 return flag;
-	 }
+	public void addLesson(Lesson lesson_) {
+		if(lesson_ == null) {
+			throw new IllegalArgumentException("Lesson can't be null !");
+		}
+		lessons.add(lesson_);
+	}
+	 
+	public void addBooking(Booking booking_) {
+		if(booking_ == null) {
+			throw new IllegalArgumentException("Booking can't be null !");
+		}
+		this.books.add(booking_);
+	}
+	 
+	public boolean IsAccreditate(Lesson lesson) {
+		boolean flag = false;
+		int i = 0;
+		while(i<accreditations.size() && flag) {
+			if(lesson.getType().getAccreditations() == getAccreditations()) {
+				flag = true;
+			}
+		}
+		return flag;
+	}
 }
