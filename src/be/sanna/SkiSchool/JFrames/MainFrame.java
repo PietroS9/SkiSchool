@@ -1,4 +1,4 @@
-package be.sanna.SkiSchool;
+package be.sanna.SkiSchool.JFrames;
 
 import java.awt.EventQueue;
 

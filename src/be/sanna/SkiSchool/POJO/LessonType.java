@@ -1,4 +1,4 @@
-package be.sanna.SkiSchool;
+package be.sanna.SkiSchool.POJO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,15 +10,15 @@ public class LessonType {
 	private static int lessonTypeNum = 1;
 	private Level level;
 	private double price;
-	private List<Accreditation> accreditations;
+	private Accreditation accreditation;
 	private List<Lesson> lessons;
 	
 	//Constructor
-	public LessonType(Level lvl, double price_) {
+	public LessonType(Level lvl, double price_, Accreditation accr_) {
 		this.lessonTypeId = lessonTypeNum++;
 		this.level = lvl;
 		this.price = price_;
-		this.accreditations = new ArrayList<Accreditation>();
+		this.accreditation = accr_;
 		this.lessons = new ArrayList<Lesson>();
 	}
 	
@@ -26,7 +26,7 @@ public class LessonType {
 		this.lessonTypeId = lessonTypeNum++;
 		this.level = null;
 		this.price = 0;
-		this.accreditations = new ArrayList<Accreditation>();
+		this.accreditation = null;
 		this.lessons = new ArrayList<Lesson>();
 	}
 	
@@ -43,8 +43,8 @@ public class LessonType {
 		return price;
 	}
 	
-	public List<Accreditation> getAccreditations(){
-		return accreditations;
+	public Accreditation getAccreditation(){
+		return accreditation;
 	}
 	
 	public List<Lesson> getLessons(){
@@ -60,7 +60,7 @@ public class LessonType {
 		this.price = price_;
 	}
 	
-	public void setAccreditations(Accreditation accr) {
+	public void setAccreditation(Accreditation accr) {
 		try {
 			addAccreditation(accr);
 		}
@@ -83,7 +83,7 @@ public class LessonType {
 		if(accr == null) {
 			throw new IllegalArgumentException("Accreditation can't be null !");
 		}
-		accreditations.add(accr);
+		this.accreditation = accr;
 	}
 	
 	public void addLesson(Lesson lesson) {

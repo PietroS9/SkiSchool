@@ -1,4 +1,4 @@
-package be.sanna.SkiSchool;
+package be.sanna.SkiSchool.POJO;
 
 import java.util.ArrayList;
 import java.util.List;

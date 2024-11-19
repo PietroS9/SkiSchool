@@ -1,4 +1,4 @@
-package be.sanna.SkiSchool;
+package be.sanna.SkiSchool.POJO;
 
 import java.util.List;
 import java.time.LocalDate;
