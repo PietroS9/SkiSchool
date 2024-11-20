@@ -131,7 +131,7 @@ public class Instructor extends Person{
 		boolean flag = false;
 		int i = 0;
 		while(i<accreditations.size() && flag) {
-			if(lesson.getType().getAccreditations() == getAccreditations()) {
+			if(lesson.getType().getAccreditation() == getAccreditations()) {
 				flag = true;
 			}
 		}

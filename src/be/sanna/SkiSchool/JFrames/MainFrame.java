@@ -40,7 +40,7 @@ public class MainFrame extends JFrame {
 	 */
 	public MainFrame() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1321, 1147);
+		setBounds(100, 100, 1115, 767);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -48,45 +48,47 @@ public class MainFrame extends JFrame {
 		contentPane.setLayout(null);
 		
 		JTabbedPane SkiSchoolPane = new JTabbedPane(JTabbedPane.TOP);
-		SkiSchoolPane.setBounds(10, 118, 1285, 979);
+		SkiSchoolPane.setBounds(10, 118, 1080, 600);
 		contentPane.add(SkiSchoolPane);
 		
 		JTabbedPane DisplayPane = new JTabbedPane(JTabbedPane.TOP);
-		DisplayPane.setBackground(Color.LIGHT_GRAY);
 		DisplayPane.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		SkiSchoolPane.addTab("Display", null, DisplayPane, null);
+		SkiSchoolPane.addTab("Afficher/Modifier", null, DisplayPane, null);
 		
 		JTabbedPane DBookingPane = new JTabbedPane(JTabbedPane.TOP);
-		DisplayPane.addTab("Booking", null, DBookingPane, null);
-		
-		JTabbedPane DInstructorPane = new JTabbedPane(JTabbedPane.TOP);
-		DisplayPane.addTab("Instructor", null, DInstructorPane, null);
+		DisplayPane.addTab("Booking", new DBookingPanel());
 		
 		JTabbedPane DLessonPane = new JTabbedPane(JTabbedPane.TOP);
-		DisplayPane.addTab("Lesson", null, DLessonPane, null);
+		DisplayPane.addTab("Leçon", null, DLessonPane, null);
+		
+		JTabbedPane DInstructorPane = new JTabbedPane(JTabbedPane.TOP);
+		DisplayPane.addTab("Instructeur", null, DInstructorPane, null);
+		
+		JTabbedPane DSkierPane = new JTabbedPane(JTabbedPane.TOP);
+		DisplayPane.addTab("Skieur", null, DSkierPane, null);
 		
 		JTabbedPane CreatePane = new JTabbedPane(JTabbedPane.TOP);
 		CreatePane.setBackground(Color.LIGHT_GRAY);
-		SkiSchoolPane.addTab("Create", null, CreatePane, null);
+		SkiSchoolPane.addTab("Créer", null, CreatePane, null);
 		
 		JTabbedPane CBookingPane = new JTabbedPane(JTabbedPane.TOP);
 		CreatePane.addTab("Booking", null, CBookingPane, null);
 		
 		JTabbedPane CInstructorPane = new JTabbedPane(JTabbedPane.TOP);
-		CreatePane.addTab("Instructor", null, CInstructorPane, null);
+		CreatePane.addTab("Instructeur", null, CInstructorPane, null);
 		
 		JTabbedPane CSkierPane = new JTabbedPane(JTabbedPane.TOP);
-		CreatePane.addTab("Skier", null, CSkierPane, null);
+		CreatePane.addTab("Skieur", null, CSkierPane, null);
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(214, 204, 179));
-		panel.setBounds(0, 0, 1305, 1108);
+		panel.setBounds(0, 0, 1107, 736);
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
 		JLabel lblLogo = new JLabel("");
 		lblLogo.setIcon(new ImageIcon(MainFrame.class.getResource("/images/LogoLarge.jpg")));
-		lblLogo.setBounds(529, 11, 180, 120);
+		lblLogo.setBounds(430, 11, 180, 120);
 		panel.add(lblLogo);
 	}
 }
