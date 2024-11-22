@@ -1,7 +1,6 @@
 package be.sanna.SkiSchool.JFrames;
 
 import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -10,15 +9,17 @@ import javax.swing.JList;
 import javax.swing.ImageIcon;
 import javax.swing.JDesktopPane;
 import java.awt.Font;
+import java.sql.Connection;
 import java.awt.Color;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 
 public class MainFrame extends JFrame {
 
+	//Attributes
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-
+	private Connection conn=null;
 	/**
 	 * Launch the application.
 	 */
@@ -59,26 +60,26 @@ public class MainFrame extends JFrame {
 		DisplayPane.addTab("Booking", new DBookingPanel());
 		
 		JTabbedPane DLessonPane = new JTabbedPane(JTabbedPane.TOP);
-		DisplayPane.addTab("Leçon", null, DLessonPane, null);
+		DisplayPane.addTab("Leçon", new DLessonPanel());
 		
 		JTabbedPane DInstructorPane = new JTabbedPane(JTabbedPane.TOP);
-		DisplayPane.addTab("Instructeur", null, DInstructorPane, null);
+		DisplayPane.addTab("Instructeur", new DInstructorPanel());
 		
 		JTabbedPane DSkierPane = new JTabbedPane(JTabbedPane.TOP);
-		DisplayPane.addTab("Skieur", null, DSkierPane, null);
+		DisplayPane.addTab("Skieur", new DSkierPanel());
 		
 		JTabbedPane CreatePane = new JTabbedPane(JTabbedPane.TOP);
 		CreatePane.setBackground(Color.LIGHT_GRAY);
 		SkiSchoolPane.addTab("Créer", null, CreatePane, null);
 		
 		JTabbedPane CBookingPane = new JTabbedPane(JTabbedPane.TOP);
-		CreatePane.addTab("Booking", null, CBookingPane, null);
+		CreatePane.addTab("Booking", new CBookingPanel());
 		
 		JTabbedPane CInstructorPane = new JTabbedPane(JTabbedPane.TOP);
-		CreatePane.addTab("Instructeur", null, CInstructorPane, null);
+		CreatePane.addTab("Instructeur", new CInstructorPanel());
 		
 		JTabbedPane CSkierPane = new JTabbedPane(JTabbedPane.TOP);
-		CreatePane.addTab("Skieur", null, CSkierPane, null);
+		CreatePane.addTab("Skieur", new CSkierPanel());
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(214, 204, 179));

@@ -64,28 +64,28 @@ public class DBookingPanel extends JPanel {
 		panel.add(lbl_info_Skier);
 		
 		JLabel lbl_info_LessonTypeLevel = new JLabel("Cours :");
-		lbl_info_LessonTypeLevel.setBounds(21, 83, 67, 14);
+		lbl_info_LessonTypeLevel.setBounds(21, 131, 67, 14);
 		panel.add(lbl_info_LessonTypeLevel);
 		
 		JLabel lbl_info_Period_startDate = new JLabel("Date de début :");
-		lbl_info_Period_startDate.setBounds(21, 128, 85, 14);
+		lbl_info_Period_startDate.setBounds(21, 176, 85, 14);
 		panel.add(lbl_info_Period_startDate);
 		
 		JLabel lbl_info_Period_endDate = new JLabel("Date de fin :");
-		lbl_info_Period_endDate.setBounds(21, 173, 85, 14);
+		lbl_info_Period_endDate.setBounds(21, 221, 85, 14);
 		panel.add(lbl_info_Period_endDate);
 		
 		JLabel lbl_info_Booking_individual = new JLabel("Cours individuel :");
-		lbl_info_Booking_individual.setBounds(21, 218, 104, 14);
+		lbl_info_Booking_individual.setBounds(21, 87, 104, 14);
 		panel.add(lbl_info_Booking_individual);
 		
 		JRadioButton rdbtnIsIndividual = new JRadioButton("Oui");
-		rdbtnIsIndividual.setBounds(138, 214, 55, 23);
+		rdbtnIsIndividual.setBounds(138, 83, 55, 23);
 		panel.add(rdbtnIsIndividual);
 		
 		JRadioButton rdbtnNotIndividual = new JRadioButton("Non");
 		rdbtnNotIndividual.setSelected(true);
-		rdbtnNotIndividual.setBounds(195, 214, 55, 23);
+		rdbtnNotIndividual.setBounds(195, 83, 55, 23);
 		panel.add(rdbtnNotIndividual);
 		
 		ButtonGroup individualLesson = new ButtonGroup();
@@ -128,15 +128,15 @@ public class DBookingPanel extends JPanel {
 		panel.add(cBox_info_Skier);
 		
 		JComboBox cBox_info_LessonType = new JComboBox();
-		cBox_info_LessonType.setBounds(133, 79, 232, 22);
+		cBox_info_LessonType.setBounds(133, 127, 232, 22);
 		panel.add(cBox_info_LessonType);
 		
 		JDateChooser startDateChooser = new JDateChooser();
-		startDateChooser.setBounds(133, 128, 232, 20);
+		startDateChooser.setBounds(133, 176, 232, 20);
 		panel.add(startDateChooser);
 		
 		JDateChooser endDateChooser = new JDateChooser();
-		endDateChooser.setBounds(133, 173, 232, 20);
+		endDateChooser.setBounds(133, 221, 232, 20);
 		panel.add(endDateChooser);
 		
 		JScrollPane scrollPane = new JScrollPane();

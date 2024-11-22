@@ -7,13 +7,15 @@ import java.util.List;
 public class Period {
 
 	//Attributes
+	private int periodID;
 	private LocalDate startDate;
 	private LocalDate endDate;
 	private boolean isVacation;
 	private List<Booking> books;
 	
 	//Constructor
-	public Period(LocalDate start, LocalDate end, boolean isVacation_) {
+	public Period(int periodID_, LocalDate start, LocalDate end, boolean isVacation_) {
+		this.periodID = periodID_;
 		this.startDate = start;
 		this.endDate = end;
 		this.isVacation = isVacation_;
