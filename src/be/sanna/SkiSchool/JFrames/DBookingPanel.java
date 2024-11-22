@@ -35,13 +35,13 @@ public class DBookingPanel extends JPanel {
 		add(SearchPanel);
 		SearchPanel.setLayout(null);
 		
-		JLabel lblSearchID = new JLabel("Booking ID :");
+		JLabel lblSearchID = new JLabel("N° réservation :");
 		lblSearchID.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblSearchID.setBounds(21, 29, 94, 17);
+		lblSearchID.setBounds(21, 29, 114, 17);
 		SearchPanel.add(lblSearchID);
 		
 		textSearchID = new JTextField();
-		textSearchID.setBounds(125, 29, 128, 20);
+		textSearchID.setBounds(145, 29, 108, 20);
 		SearchPanel.add(textSearchID);
 		textSearchID.setColumns(10);
 		
