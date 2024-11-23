@@ -17,6 +17,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.SwingConstants;
 import javax.swing.JTextArea;
 import com.toedter.calendar.JDateChooser;
+import javax.swing.JTable;
 
 public class DInstructorPanel extends JPanel {
 
@@ -24,6 +25,7 @@ public class DInstructorPanel extends JPanel {
 	private JTextField text_search_InstructorID;
 	private JTextField text_info_Firstname;
 	private JTextField text_info_LastName;
+	private JTable tableDInstructor;
 
 	/**
 	 * Create the panel.
@@ -124,12 +126,31 @@ public class DInstructorPanel extends JPanel {
 		scrollPane.setBounds(448, 31, 595, 490);
 		add(scrollPane);
 		
+		tableDInstructor = new JTable();
+		scrollPane.setColumnHeaderView(tableDInstructor);
+		
 		JButton btnUpdate = new JButton("Mettre à jour le profil");
 		btnUpdate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnUpdate.setBounds(136, 480, 165, 41);
+		btnUpdate.setBounds(26, 480, 165, 41);
 		add(btnUpdate);
+		
+		JButton btnClear = new JButton("Effacer");
+		btnClear.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnClear.setBounds(210, 480, 95, 41);
+		add(btnClear);
+		
+		JButton btnDelete = new JButton("Supprimer");
+		btnDelete.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnDelete.setBounds(318, 480, 108, 41);
+		add(btnDelete);
 	}
 }

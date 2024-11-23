@@ -57,10 +57,10 @@ public class MainFrame extends JFrame {
 		SkiSchoolPane.addTab("Afficher/Modifier", null, DisplayPane, null);
 		
 		JTabbedPane DBookingPane = new JTabbedPane(JTabbedPane.TOP);
-		DisplayPane.addTab("Booking", new DBookingPanel());
+		DisplayPane.addTab("Réservations", new DBookingPanel());
 		
 		JTabbedPane DLessonPane = new JTabbedPane(JTabbedPane.TOP);
-		DisplayPane.addTab("Leçon", new DLessonPanel());
+		DisplayPane.addTab("Cours", new DLessonPanel());
 		
 		JTabbedPane DInstructorPane = new JTabbedPane(JTabbedPane.TOP);
 		DisplayPane.addTab("Instructeur", new DInstructorPanel());
@@ -73,7 +73,10 @@ public class MainFrame extends JFrame {
 		SkiSchoolPane.addTab("Créer", null, CreatePane, null);
 		
 		JTabbedPane CBookingPane = new JTabbedPane(JTabbedPane.TOP);
-		CreatePane.addTab("Booking", new CBookingPanel());
+		CreatePane.addTab("Réservations", new CBookingPanel());
+		
+		JTabbedPane CLessonPane = new JTabbedPane(JTabbedPane.TOP);
+		CreatePane.addTab("Cours", new CLessonPanel());
 		
 		JTabbedPane CInstructorPane = new JTabbedPane(JTabbedPane.TOP);
 		CreatePane.addTab("Instructeur", new CInstructorPanel());

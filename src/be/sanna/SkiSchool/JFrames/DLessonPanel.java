@@ -17,6 +17,7 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
 import com.toedter.calendar.JDateChooser;
+import javax.swing.JTable;
 
 public class DLessonPanel extends JPanel {
 
@@ -24,6 +25,7 @@ public class DLessonPanel extends JPanel {
 	private JTextField text_info_Lessontype_Price;
 	private JTextField text_info_Lesson_min;
 	private JTextField text_info_Lesson_max;
+	private JTable tableDLesson;
 
 	/**
 	 * Create the panel.
@@ -56,7 +58,7 @@ public class DLessonPanel extends JPanel {
 		
 		JPanel panel = new JPanel();
 		panel.setBorder(new TitledBorder(null, "Informations", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel.setBounds(26, 120, 400, 352);
+		panel.setBounds(26, 120, 400, 349);
 		add(panel);
 		panel.setLayout(null);
 		
@@ -69,12 +71,12 @@ public class DLessonPanel extends JPanel {
 		panel.add(lbl_info_LessonTypeLevel);
 		
 		JLabel lbl_info_Lessontype_Price = new JLabel("Prix/semaine :");
-		lbl_info_Lessontype_Price.setBounds(21, 129, 96, 14);
+		lbl_info_Lessontype_Price.setBounds(21, 178, 96, 14);
 		panel.add(lbl_info_Lessontype_Price);
 		
 		JLabel lbl_info_euroSign = new JLabel("€");
 		lbl_info_euroSign.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lbl_info_euroSign.setBounds(239, 128, 23, 14);
+		lbl_info_euroSign.setBounds(239, 177, 23, 14);
 		panel.add(lbl_info_euroSign);
 		
 		JComboBox cBox_info_Skier = new JComboBox();
@@ -86,38 +88,65 @@ public class DLessonPanel extends JPanel {
 		panel.add(cBox_info_LessonType);
 		
 		text_info_Lessontype_Price = new JTextField();
-		text_info_Lessontype_Price.setBounds(133, 125, 96, 22);
+		text_info_Lessontype_Price.setBounds(133, 174, 96, 22);
 		panel.add(text_info_Lessontype_Price);
 		text_info_Lessontype_Price.setColumns(10);
 		
 		text_info_Lesson_min = new JTextField();
 		text_info_Lesson_min.setColumns(10);
-		text_info_Lesson_min.setBounds(212, 174, 50, 22);
+		text_info_Lesson_min.setBounds(238, 223, 50, 22);
 		panel.add(text_info_Lesson_min);
 		
 		JLabel lbl_info_Lesson_min = new JLabel("Nombre de participants minimum:");
-		lbl_info_Lesson_min.setBounds(21, 178, 175, 14);
+		lbl_info_Lesson_min.setBounds(21, 227, 208, 14);
 		panel.add(lbl_info_Lesson_min);
 		
 		text_info_Lesson_max = new JTextField();
 		text_info_Lesson_max.setColumns(10);
-		text_info_Lesson_max.setBounds(212, 217, 50, 22);
+		text_info_Lesson_max.setBounds(238, 266, 50, 22);
 		panel.add(text_info_Lesson_max);
 		
 		JLabel lbl_info_Lesson_max = new JLabel("Nombre de participants maximum :");
-		lbl_info_Lesson_max.setBounds(21, 221, 175, 14);
+		lbl_info_Lesson_max.setBounds(21, 270, 208, 14);
 		panel.add(lbl_info_Lesson_max);
+		
+		JLabel lbl_info_instructor = new JLabel("Instructeur :");
+		lbl_info_instructor.setBounds(21, 133, 96, 14);
+		panel.add(lbl_info_instructor);
+		
+		JComboBox cBox_info_InstructorName = new JComboBox();
+		cBox_info_InstructorName.setBounds(133, 129, 232, 22);
+		panel.add(cBox_info_InstructorName);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(448, 31, 595, 490);
 		add(scrollPane);
+		
+		tableDLesson = new JTable();
+		scrollPane.setColumnHeaderView(tableDLesson);
+		
+		JButton btnClear = new JButton("Effacer");
+		btnClear.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnClear.setBounds(165, 480, 122, 41);
+		add(btnClear);
 		
 		JButton btnUpdate = new JButton("Mettre à jour");
 		btnUpdate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnUpdate.setBounds(156, 480, 122, 41);
+		btnUpdate.setBounds(26, 480, 122, 41);
 		add(btnUpdate);
+		
+		JButton btnDelete = new JButton("Supprimer");
+		btnDelete.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnDelete.setBounds(304, 480, 122, 41);
+		add(btnDelete);
 	}
 }

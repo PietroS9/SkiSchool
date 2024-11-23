@@ -16,12 +16,14 @@ import javax.swing.JComboBox;
 import com.toedter.calendar.JDateChooser;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JTable;
 
 public class DBookingPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	private JTextField textSearchID;
 	private JTextField textTotalPrice;
+	private JTable tableDBooking;
 
 	/**
 	 * Create the panel.
@@ -142,6 +144,9 @@ public class DBookingPanel extends JPanel {
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(448, 31, 595, 490);
 		add(scrollPane);
+		
+		tableDBooking = new JTable();
+		scrollPane.setColumnHeaderView(tableDBooking);
 		
 		JButton btnClear = new JButton("Effacer");
 		btnClear.addActionListener(new ActionListener() {

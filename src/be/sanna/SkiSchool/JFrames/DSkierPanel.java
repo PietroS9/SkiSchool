@@ -16,6 +16,7 @@ import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
 import com.toedter.calendar.JDateChooser;
+import javax.swing.JTable;
 
 public class DSkierPanel extends JPanel {
 
@@ -23,6 +24,7 @@ public class DSkierPanel extends JPanel {
 	private JTextField text_search_StudentID;
 	private JTextField text_info_FN;
 	private JTextField text_info_LN;
+	private JTable tableDSkier;
 
 	/**
 	 * Create the panel.
@@ -56,7 +58,7 @@ public class DSkierPanel extends JPanel {
 		
 		JPanel panel = new JPanel();
 		panel.setBorder(new TitledBorder(null, "Informations", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel.setBounds(26, 120, 400, 352);
+		panel.setBounds(26, 120, 400, 178);
 		add(panel);
 		panel.setLayout(null);
 		
@@ -90,13 +92,32 @@ public class DSkierPanel extends JPanel {
 		scrollPane.setBounds(448, 31, 595, 490);
 		add(scrollPane);
 		
+		tableDSkier = new JTable();
+		scrollPane.setColumnHeaderView(tableDSkier);
+		
+		JButton btnClear = new JButton("Effacer");
+		btnClear.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnClear.setBounds(199, 309, 100, 41);
+		add(btnClear);
+		
 		JButton btnUpdate = new JButton("Mettre à jour le profil");
 		btnUpdate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnUpdate.setBounds(136, 480, 165, 41);
+		btnUpdate.setBounds(26, 309, 165, 41);
 		add(btnUpdate);
+		
+		JButton btnDelete = new JButton("Supprimer");
+		btnDelete.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnDelete.setBounds(309, 309, 117, 41);
+		add(btnDelete);
 	}
 
 }
