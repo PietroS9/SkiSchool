@@ -12,8 +12,8 @@ public class Instructor extends Person{
 	private List<Booking> books;
 	
 	//Constructor
-	public Instructor(String fn, String ln, LocalDate dob_, Accreditation accr) {
-		super(fn,ln,dob_);
+	public Instructor(int id_, String fn, String ln, LocalDate dob_, Accreditation accr) {
+		super(id_,fn,ln,dob_);
 		this.accreditations = new ArrayList<Accreditation>();
 		this.lessons = new ArrayList<Lesson>();
 		this.books = new ArrayList<Booking>();
@@ -62,6 +62,10 @@ public class Instructor extends Person{
 	}
 	
 	//Setter
+	public void setID(int id_) {
+		super.setID(id_);
+	}
+	
 	public void setFirstName(String fn) {
 		super.setFirstName(fn);
 	}

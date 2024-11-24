@@ -3,6 +3,7 @@ package be.sanna.SkiSchool.JFrames;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -13,8 +14,13 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.table.DefaultTableModel;
 
 import com.toedter.calendar.JDateChooser;
+
+import be.sanna.SkiSchool.DAO.StudentDAO;
+import be.sanna.SkiSchool.POJO.Student;
+
 import javax.swing.JTable;
 
 public class CSkierPanel extends JPanel {
@@ -66,9 +72,6 @@ public class CSkierPanel extends JPanel {
 		scrollPane.setBounds(448, 31, 595, 490);
 		add(scrollPane);
 		
-		tableCSkier = new JTable();
-		scrollPane.setColumnHeaderView(tableCSkier);
-		
 		JButton btnCreateBooking = new JButton("Créer");
 		btnCreateBooking.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -76,6 +79,31 @@ public class CSkierPanel extends JPanel {
 		});
 		btnCreateBooking.setBounds(173, 213, 89, 34);
 		add(btnCreateBooking);
+		
+		loadStudentData();
 	}
+	
+	private void loadStudentData() {
+	    // Instancier le DAO
+	    StudentDAO studentDAO = new StudentDAO();
 
+	    // Récupérer les skieurs depuis la base de données
+	    List<Student> students = studentDAO.getAllStudents();
+
+	    // Convertir les données pour le tableau
+	    String[] columnNames = {"N° skieur", "Prénom", "Nom", "Date de naissance"};
+	    Object[][] data = new Object[students.size()][4];
+
+	    for (int i = 0; i < students.size(); i++) {
+	        Student student = students.get(i);
+	        data[i][0] = student.getId();
+	        data[i][1] = student.getFirstName();
+	        data[i][2] = student.getLastName();
+	        data[i][3] = student.getDob();
+	    }
+
+	    // Mettre à jour le modèle de la JTable
+	    DefaultTableModel model = new DefaultTableModel(data, columnNames);
+	    tableCSkier.setModel(model);
+	}
 }

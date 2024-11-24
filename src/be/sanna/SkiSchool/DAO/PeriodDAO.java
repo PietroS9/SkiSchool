@@ -7,8 +7,9 @@ import java.sql.SQLException;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
-import be.sanna.SkiSchool.POJO.ConnectionJDBC;
+
 import be.sanna.SkiSchool.POJO.Period;
+import be.sanna.SkiSchool.Utilities.ConnectionJDBC;
 
 public class PeriodDAO {
 	

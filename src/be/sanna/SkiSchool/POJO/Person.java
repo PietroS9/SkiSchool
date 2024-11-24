@@ -7,21 +7,20 @@ public abstract class Person {
 
 	//Attributes
 	private int id;
-	private static int personNum = 1;
 	private String firstName;
 	private String lastName;
 	private LocalDate dob;
 	
 	//Constructor
-	public Person(String fn, String ln, LocalDate dob_) {
-		this.id = personNum++;
+	public Person(int id_, String fn, String ln, LocalDate dob_) {
+		this.id = id_;
 		this.firstName = fn;
 		this.lastName = ln;
 		this.dob = dob_;
 	}
 	
 	public Person() {
-		this.id = personNum++;
+		this.id = 0;
 		this.firstName = "";
 		this.lastName = "";
 		this.dob = null;
@@ -44,6 +43,10 @@ public abstract class Person {
 	}
 	
 	//Setter
+	public void setID(int id_) {
+		this.id = id_;
+	}
+	
 	public void setFirstName(String fn) {
 		this.firstName = fn;
 	}

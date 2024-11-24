@@ -10,8 +10,8 @@ public class Student extends Person{
 	private  List<Booking> books;
 	
 	//Constructor
-	public Student(String fn, String ln, LocalDate dob_) {
-		super(fn,ln,dob_);
+	public Student(int id_, String fn, String ln, LocalDate dob_) {
+		super(id_,fn,ln,dob_);
 		this.books = new ArrayList<>();
 	}
 	
@@ -42,6 +42,10 @@ public class Student extends Person{
 	}
 	
 	//Setter
+	public void setID(int id_) {
+		super.setID(id_);
+	}
+	
 	public void setFirstName(String fn) {
 		super.setFirstName(fn);
 	}

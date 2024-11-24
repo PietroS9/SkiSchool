@@ -1,4 +1,4 @@
-package be.sanna.SkiSchool.POJO;
+package be.sanna.SkiSchool.Utilities;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
