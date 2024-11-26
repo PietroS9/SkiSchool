@@ -86,15 +86,15 @@ public class StudentDAO {
 				 
 				 //if newStudent --> insert
 				 if(existingStudent == null) {
-					 
+
 					 pstmtPersons.setInt(1, wStudent.getId());
 					 pstmtPersons.setString(2, wStudent.getFirstName());
 					 pstmtPersons.setString(3, wStudent.getLastName());
 					 pstmtPersons.setDate(4, java.sql.Date.valueOf(wStudent.getDob()));
 					 pstmtPersons.executeUpdate();
-					
+					 
 					 pstmtStudents.setInt(1, wStudent.getId());
-					 pstmtStudents.executeUpdate();
+					 pstmtPersons.executeUpdate();
 					
 					 students.add(wStudent);
 					//if student has changed

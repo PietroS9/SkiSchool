@@ -127,6 +127,7 @@ public class MainFrame extends JFrame {
 
         if (choice == JOptionPane.YES_OPTION) {
             studentDAO.SyncStudentsToDB();
+            //instructorDAO.SyncInstructorsToDB();
             //Ajouter les autres fonctions de synchronisation
             System.out.println("Modifications sauvegardées.");
             dispose();

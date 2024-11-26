@@ -110,22 +110,28 @@ public class InstructorDAO {
 				
 				Instructor existingInstructor = instructors.stream().filter(s -> s.getId() == wInstructor.getId()).findFirst().orElse(null);
 				 
-				 //if newStudent --> insert
+				 //if newInstructor --> insert
 				 if(existingInstructor == null) {
 					 
-					 pstmtPersons.setInt(1, wInstructor.getId());
-					 pstmtPersons.setString(2, wInstructor.getFirstName());
-					 pstmtPersons.setString(3, wInstructor.getLastName());
-					 pstmtPersons.setDate(4, java.sql.Date.valueOf(wInstructor.getDob()));
-					 pstmtPersons.executeUpdate();
-					
-					 pstmtInstructors.setInt(1, wInstructor.getId());
-					 pstmtInstructors.executeUpdate();
+					pstmtPersons.setInt(1, wInstructor.getId());
+	                pstmtPersons.setString(2, wInstructor.getFirstName());
+	                pstmtPersons.setString(3, wInstructor.getLastName());
+	                pstmtPersons.setDate(4, java.sql.Date.valueOf(wInstructor.getDob()));
+	                pstmtPersons.executeUpdate();
+	
+	                pstmtInstructors.setInt(1, wInstructor.getId());
+	                pstmtInstructors.executeUpdate();
+					 
+					 for(Accreditation accr : wInstructor.getAccreditations()) {
+						 System.out.println("Vérification pour instructeur ID: " + wInstructor.getId() 
+						 						+ ", accréditation ID: " + accr.getAccrId());
+					 }
 					 
 					 for(Accreditation accr : wInstructor.getAccreditations()) {
 						 
 						 pstmtInsertAccr.setInt(1, wInstructor.getId());
 						 pstmtInsertAccr.setInt(2, accr.getAccrId());
+						 pstmtInsertAccr.executeUpdate();
 					 }
 					
 					 instructors.add(wInstructor);
@@ -134,6 +140,7 @@ public class InstructorDAO {
 					 
 					 //Clean all linked accreditations
 					 pstmtClean.setInt(1, wInstructor.getId());
+					 pstmtClean.executeUpdate();
 					 
 					 //Update info
 					 pstmtUpdate.setString(1, wInstructor.getFirstName());
@@ -147,6 +154,7 @@ public class InstructorDAO {
 						 
 						 pstmtInsertAccr.setInt(1, wInstructor.getId());
 						 pstmtInsertAccr.setInt(2, accr.getAccrId());
+						 pstmtInsertAccr.executeUpdate();
 					 }
 
 		             int index = instructors.indexOf(existingInstructor);

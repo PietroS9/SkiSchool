@@ -187,8 +187,6 @@ public class CInstructorPanel extends JPanel {
                 JOptionPane.ERROR_MESSAGE);
             return;
         }
-        
-		
 		
 		if (chckbxAccr1.isSelected()) {
 	        accreditations.add(new Accreditation(1,"Ski enfant"));
@@ -215,7 +213,7 @@ public class CInstructorPanel extends JPanel {
 	    }
 		
 	    Instructor newInstructor = new Instructor();
-	    newInstructor.setID(instructorDAO.getWInstructors().size() + 11);
+	    newInstructor.setID(instructorDAO.getWInstructors().size() + 40);
 	    newInstructor.setFirstName(firstName);
 	    newInstructor.setLastName(lastName);
 	    newInstructor.setDob(birthDate);
