@@ -4,6 +4,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import be.sanna.SkiSchool.DAO.InstructorDAO;
+import be.sanna.SkiSchool.DAO.StudentDAO;
+
 public class Instructor extends Person{
 
 	//Attributes
@@ -87,6 +90,15 @@ public class Instructor extends Person{
 		}
 	}
 	
+	public void setAccreditationsList(List<Accreditation> accrs) {
+		try {
+			this.accreditations = accrs;
+		}
+		catch (IllegalArgumentException e) {
+			System.out.println(e.getMessage());
+		}
+	}
+	
 	public void setLessons(Lesson lesson_) {
 		try {
 			addLesson(lesson_);
@@ -140,5 +152,17 @@ public class Instructor extends Person{
 			}
 		}
 		return flag;
+	}
+	
+	public List<Instructor> getAllInstructors(InstructorDAO dao, List<Accreditation> accrs){
+		return dao.getAllInstructors(accrs);
+	}
+	
+	public void addInstructor(InstructorDAO dao) {
+		dao.addInstructor(this);
+	}
+	
+	public void SyncInstructorsToDB(InstructorDAO dao) {
+		dao.SyncInstructorsToDB();
 	}
 }

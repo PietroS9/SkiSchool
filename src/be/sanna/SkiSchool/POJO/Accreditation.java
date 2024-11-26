@@ -7,23 +7,28 @@ public class Accreditation {
 
 	//Attributes
 	private int accrId;
-	private static int accrNum = 1;
 	private String name;
 	private List<LessonType> lessonTypes;
 	private List<Instructor> instructors;
 
 	
 	//Constructor
-	public Accreditation(String name_, LessonType lessonType_) {
-		this.accrId = accrNum++;
+	public Accreditation(int accrId_, String name_, LessonType lessonType_) {
+		this.accrId = accrId_;
 		this.name = name_;
 		this.lessonTypes = new ArrayList<LessonType>();
 		this.instructors = new ArrayList<Instructor>();
 		addLessonType(lessonType_);
 	}
 	
+	public Accreditation(int accrId_, String name_) {
+		this.accrId = accrId_;
+		this.name = name_;
+		this.lessonTypes = new ArrayList<LessonType>();
+		this.instructors = new ArrayList<Instructor>();
+	}
 	public Accreditation() {
-		this.accrId = accrNum++;
+		this.accrId = 0;
 		this.name = "";
 		this.lessonTypes = new ArrayList<LessonType>();
 		this.instructors = new ArrayList<Instructor>();
@@ -46,7 +51,11 @@ public class Accreditation {
 		return instructors;
 	}
 	
-	//Setter	
+	//Setter
+	public void setID(int accrId_) {
+		this.accrId = accrId_;
+	}
+	
 	public void setName(String n) {
 		this.name = n;
 	}

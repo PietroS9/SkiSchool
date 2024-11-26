@@ -1,6 +1,9 @@
 package be.sanna.SkiSchool.POJO;
 
 import java.util.List;
+
+import be.sanna.SkiSchool.DAO.StudentDAO;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -77,6 +80,18 @@ public class Student extends Person{
 	
 	public int CalculateAge() {
 		return super.CalculateAge();
+	}
+	
+	public List<Student> getAllStudents(StudentDAO dao){
+		return dao.getAllStudents();
+	}
+	
+	public void addStudent(StudentDAO dao) {
+		dao.addStudent(this);
+	}
+	
+	public void SyncStudentsToDB(StudentDAO dao) {
+		dao.SyncStudentsToDB();
 	}
 	
 }
