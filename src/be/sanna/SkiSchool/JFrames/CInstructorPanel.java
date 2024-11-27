@@ -1,8 +1,11 @@
 package be.sanna.SkiSchool.JFrames;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -129,6 +132,18 @@ public class CInstructorPanel extends JPanel {
 		
 		tableCInstructor = new JTable();
 		scrollPane.setViewportView(tableCInstructor);
+		tableCInstructor.addMouseMotionListener(new MouseMotionAdapter() {
+		    @Override
+		    public void mouseMoved(MouseEvent e) {
+		        int row = tableCInstructor.rowAtPoint(e.getPoint());
+		        int col = tableCInstructor.columnAtPoint(e.getPoint());
+		        if (col == 4) {
+		        	tableCInstructor.setToolTipText((String) tableCInstructor.getValueAt(row, col));
+		        } else {
+		        	tableCInstructor.setToolTipText(null);
+		        }
+		    }
+		});
 		
 		btnCreateBooking = new JButton("Créer");
 		btnCreateBooking.addActionListener(new ActionListener() {
@@ -147,20 +162,28 @@ public class CInstructorPanel extends JPanel {
 		
 		List<Instructor> instructors = instructor.getAllInstructors(instructorDAO, accrDAO.getAllAccreditations());
 		
-		updateTable();
+		updateTable(instructors);
 	}
 	
-	private void updateTable() {
-		String[] columnNames = {"N° instructeur", "Prénom", "Nom", "Date de naissance", "Accréditation"};
-        Object[][] data = new Object[instructorDAO.getWInstructors().size()][5];
+	private void updateTable(List<Instructor> instructors) {
+		String[] columnNames = {"N° instructeur", "Prénom", "Nom", "Date de naissance", "Accréditation(s)"};
+        Object[][] data = new Object[instructorDAO.getInstructors().size()][5];
 
-        for (int i = 0; i < instructorDAO.getWInstructors().size(); i++) {
-            Instructor instructor = instructorDAO.getWInstructors().get(i);
+        for (int i = 0; i < instructors.size(); i++) {
+            Instructor instructor = instructors.get(i);
             data[i][0] = instructor.getId();
             data[i][1] = instructor.getFirstName();
             data[i][2] = instructor.getLastName();
             data[i][3] = instructor.getDob().format(DateTimeFormatter.ofPattern("dd-MM-yyy"));
-            data[i][4] = instructor.getAccreditations().getFirst().getName();
+            
+            StringBuilder accreditations = new StringBuilder();
+            for (Accreditation accr : instructor.getAccreditations()) {
+                if (accreditations.length() > 0) {
+                    accreditations.append(",\n");
+                }
+                accreditations.append(accr.getName());
+            }
+            data[i][4] = accreditations.toString();
         }
 
         DefaultTableModel model = new DefaultTableModel(data, columnNames);
@@ -213,16 +236,15 @@ public class CInstructorPanel extends JPanel {
 	    }
 		
 	    Instructor newInstructor = new Instructor();
-	    newInstructor.setID(instructorDAO.getWInstructors().size() + 40);
+	    newInstructor.setID(instructorDAO.getNextID());
 	    newInstructor.setFirstName(firstName);
 	    newInstructor.setLastName(lastName);
 	    newInstructor.setDob(birthDate);
-	    
 	    newInstructor.setAccreditationsList(accreditations);
 	    
-	    newInstructor.addInstructor(instructorDAO);
+	    newInstructor.insertToDB(instructorDAO);
 	    
-	    updateTable();
+	    loadInstructorData();
 
 	    textFN.setText("");
 	    textLN.setText("");

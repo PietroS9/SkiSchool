@@ -6,7 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import be.sanna.SkiSchool.POJO.Accreditation;
 import be.sanna.SkiSchool.POJO.Instructor;
@@ -17,7 +19,6 @@ public class InstructorDAO {
 	//Attributes
 	private Connection conn = null;
 	private List<Instructor> instructors = new ArrayList<>();
-	private List<Instructor> wInstructors = new ArrayList<>();
 	
 	//Constructor
 	public InstructorDAO() {
@@ -29,144 +30,116 @@ public class InstructorDAO {
 		return instructors;
 	}
 	
-	public List<Instructor> getWInstructors(){
-		return wInstructors;
-	}
-	
 	//Setter
 	public void setInstructors(Instructor instructor_) {
 		this.instructors.add(instructor_);
 	}
 	
-	public void setWInstructors(Instructor instructor_) {
-		this.wInstructors.add(instructor_);
-	}
-	
 	//Methods
 	public List<Instructor> getAllInstructors(List<Accreditation> accrs) {
-		String query = "SELECT p.personID, p.firstname, p.lastname, p.birthDate, a.name_ "
-				+ "FROM persons p "
-				+ "JOIN instructors i ON p.personID = i.personID "
-				+ "JOIN instructors_accreditations ia ON i.personID = ia.personID "
-				+ "JOIN accreditations a ON ia.accrID = a.accrID "
-				+ "ORDER BY p.personID";
-		
-		try(Statement stmt = conn.createStatement();
-				ResultSet rs = stmt.executeQuery(query)){
+		if(instructors.isEmpty()) {
 			
-			while (rs.next()) {
+			String query = "SELECT p.personID, p.firstname, p.lastname, p.birthDate, a.name_ "
+					+ "FROM persons p "
+					+ "JOIN instructors i ON p.personID = i.personID "
+					+ "JOIN instructors_accreditations ia ON i.personID = ia.personID "
+					+ "JOIN accreditations a ON ia.accrID = a.accrID "
+					+ "ORDER BY p.personID";
+			
+			try(Statement stmt = conn.createStatement();
+					ResultSet rs = stmt.executeQuery(query)){
 				
-				//If instructor has more than one accreditation
-				for(Instructor instructor : instructors) {
-					if(instructor.getId() == rs.getInt("personID")) {
-						for(Accreditation accr : accrs) {
-							if(accr.getName().equals(rs.getString("name_"))) {
-								instructor.addAccreditation(accr);
-								break;
-							}
-						}
-						break;
-					}
-				}
-				//Else
-				Instructor instructor = new Instructor();
-				instructor.setID(rs.getInt("personID"));
-				instructor.setFirstName(rs.getString("firstname"));
-				instructor.setLastName(rs.getString("lastname"));
-				instructor.setDob(rs.getDate("birthDate").toLocalDate());
-				for(Accreditation accr : accrs) {
-					if(accr.getName().equals(rs.getString("name_"))) {
-						instructor.addAccreditation(accr);
-					}
+				Map<Integer, Instructor> instructorMap = new HashMap<>();
+				
+				while (rs.next()) {
+					
+					int instructorID = rs.getInt("personID");
+					String accrName = rs.getString("name_");
+					Instructor instructor = instructorMap.get(instructorID);
+					
+					
+					if (instructor == null) {
+	                    instructor = new Instructor();
+	                    instructor.setID(instructorID);
+	                    instructor.setFirstName(rs.getString("firstname"));
+	                    instructor.setLastName(rs.getString("lastname"));
+	                    instructor.setDob(rs.getDate("birthDate").toLocalDate());
+
+	                    instructorMap.put(instructorID, instructor);
+	                }
+					
+					for (Accreditation accr : accrs) {
+	                    if (accr.getName().equals(accrName)) {
+	                        instructor.addAccreditation(accr);
+	                        break;
+	                    }
+	                }
 				}
 				
-				instructors.add(instructor);
-				wInstructors.add(instructor);
+				instructors.addAll(instructorMap.values());
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
 			}
-		} catch (SQLException e) {
-			e.printStackTrace();
 		}
-		return wInstructors;	
+		return instructors;	
 	}
 	
 	public void addInstructor(Instructor instructor_) {
-		wInstructors.add(instructor_);
+		instructors.add(instructor_);
 	}
 	
-	public void SyncInstructorsToDB() {
+	public int getNextID() {
+		String getNextIDQuery = "SELECT PERSONS_SEQ.NEXTVAL FROM dual";
+		int stdID = -1;
+		
+		try (Statement stmt = conn.createStatement()){
+				
+			 ResultSet rsNextID = stmt.executeQuery(getNextIDQuery);
+			 if(rsNextID.next()) {
+				 stdID = rsNextID.getInt(1);
+			 }
+			 rsNextID.close();
+			 
+			 if(stdID == -1) throw new SQLException("Échec de la récupération du prochain ID");
+			 
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return stdID;
+	}
+	
+	public void insertToDB(Instructor instructor) {
 		String personsQuery = "INSERT INTO persons VALUES (?,?,?,?)";
 		String instructorsQuery = "INSERT INTO instructors VALUES (?)";
-		String updateInstructorQuery = "UPDATE persons SET firstname=?, lastname=?, birthDAte=? WHERE personID=?";
 		String insertAccreditationsQuery = "INSERT INTO instructors_accreditations VALUES (?,?)";
-		String cleanInst_AccrQuery = "DELETE FROM instructors_accreditations WHERE personID = ?";
 		
 		try (PreparedStatement pstmtPersons = conn.prepareStatement(personsQuery);
-				PreparedStatement pstmtInstructors = conn.prepareStatement(instructorsQuery);
-				PreparedStatement pstmtUpdate = conn.prepareStatement(updateInstructorQuery);
-				PreparedStatement pstmtInsertAccr = conn.prepareStatement(insertAccreditationsQuery);
-				PreparedStatement pstmtClean = conn.prepareStatement(cleanInst_AccrQuery)){
-			
-			for (Instructor wInstructor : wInstructors) {
-				
-				Instructor existingInstructor = instructors.stream().filter(s -> s.getId() == wInstructor.getId()).findFirst().orElse(null);
-				 
-				 //if newInstructor --> insert
-				 if(existingInstructor == null) {
-					 
+			 PreparedStatement pstmtInstructors = conn.prepareStatement(instructorsQuery);
+			 PreparedStatement pstmtInsertAccr = conn.prepareStatement(insertAccreditationsQuery)){
+
 					 //Insert into persons
-					pstmtPersons.setInt(1, wInstructor.getId());
-	                pstmtPersons.setString(2, wInstructor.getFirstName());
-	                pstmtPersons.setString(3, wInstructor.getLastName());
-	                pstmtPersons.setDate(4, java.sql.Date.valueOf(wInstructor.getDob()));
+					pstmtPersons.setInt(1, instructor.getId());
+	                pstmtPersons.setString(2, instructor.getFirstName());
+	                pstmtPersons.setString(3, instructor.getLastName());
+	                pstmtPersons.setDate(4, java.sql.Date.valueOf(instructor.getDob()));
 	                pstmtPersons.executeUpdate();
 	
 	                //insert into instructors
-	                pstmtInstructors.setInt(1, wInstructor.getId());
+	                pstmtInstructors.setInt(1, instructor.getId());
 	                pstmtInstructors.executeUpdate();
 					 
-					 /*for(Accreditation accr : wInstructor.getAccreditations()) {
-						 System.out.println("Vérification pour instructeur ID: " + wInstructor.getId()
-						 + "Nom : " + wInstructor.getFirstName()
-						 + "Prenom : " + wInstructor.getLastName()
-						 + "DOB : " + wInstructor.getDob()
- 						 + ", accréditation ID: " + accr.getAccrId()
- 						 + "Name :" + accr.getName());
-					 }*/
 					 
-					 for(Accreditation accr : wInstructor.getAccreditations()) {
-						 
-						 pstmtInsertAccr.setInt(1, wInstructor.getId());
+	                for(Accreditation accr : instructor.getAccreditations()) {
+					 
+						 pstmtInsertAccr.setInt(1, instructor.getId());
 						 pstmtInsertAccr.setInt(2, accr.getAccrId());
 						 pstmtInsertAccr.executeUpdate();
-					 }
-					
-					 instructors.add(wInstructor);
-				 //if instructor has changed
-				 } else {
-					 System.out.println("Je rentre dans le else");
-					 //Clean all linked accreditations
-					 pstmtClean.setInt(1, wInstructor.getId());
-					 pstmtClean.executeUpdate();
-					 
-					 //Update info
-					 pstmtUpdate.setString(1, wInstructor.getFirstName());
-		             pstmtUpdate.setString(2, wInstructor.getLastName());
-		             pstmtUpdate.setDate(3, java.sql.Date.valueOf(wInstructor.getDob()));
-		             pstmtUpdate.setInt(4, wInstructor.getId());
-		             pstmtUpdate.executeUpdate();
-		             
-		             //Insert all accreditations
-		             for(Accreditation accr : wInstructor.getAccreditations()) {
-						 
-						 pstmtInsertAccr.setInt(1, wInstructor.getId());
-						 pstmtInsertAccr.setInt(2, accr.getAccrId());
-						 pstmtInsertAccr.executeUpdate();
-					 }
+	                }
+				
+					addInstructor(instructor);
 
-		             int index = instructors.indexOf(existingInstructor);
-		             instructors.set(index, wInstructor);
-				 }
-			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

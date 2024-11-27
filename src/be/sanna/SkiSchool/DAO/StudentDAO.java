@@ -43,8 +43,6 @@ public class StudentDAO {
 					+ "JOIN students s ON p.personID = s.personID "
 					+ "ORDER BY p.personID";
 			
-			students.clear();
-			
 			try(Statement stmt = conn.createStatement();
 					ResultSet rs = stmt.executeQuery(query)){
 				while (rs.next()) {

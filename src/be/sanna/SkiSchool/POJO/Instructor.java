@@ -162,7 +162,7 @@ public class Instructor extends Person{
 		dao.addInstructor(this);
 	}
 	
-	public void SyncInstructorsToDB(InstructorDAO dao) {
-		dao.SyncInstructorsToDB();
+	public void insertToDB(InstructorDAO dao) {
+		dao.insertToDB(this);
 	}
 }
