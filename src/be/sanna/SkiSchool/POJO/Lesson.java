@@ -1,5 +1,6 @@
 package be.sanna.SkiSchool.POJO;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,6 +11,8 @@ public class Lesson {
 	private static int lessonNum = 1;
 	private int minStudents;
 	private int maxStudents;
+	private LocalDate lessonDate;
+	private String amORpm;
 	private LessonType type;
 	private Instructor instructor;
 	private List<Booking> books;
