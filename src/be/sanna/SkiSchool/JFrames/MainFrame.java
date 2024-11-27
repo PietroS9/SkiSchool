@@ -81,7 +81,7 @@ public class MainFrame extends JFrame {
 		DisplayPane.addTab("Cours", new DLessonPanel());
 		
 		JTabbedPane DInstructorPane = new JTabbedPane(JTabbedPane.TOP);
-		DisplayPane.addTab("Instructeur", new DInstructorPanel());
+		DisplayPane.addTab("Instructeur", new DInstructorPanel(instructorDAO, accrDAO)); 
 		
 		JTabbedPane DSkierPane = new JTabbedPane(JTabbedPane.TOP);
 		DisplayPane.addTab("Skieur", new DSkierPanel(studentDAO));
@@ -121,7 +121,8 @@ public class MainFrame extends JFrame {
                 System.out.println("Onglet sélectionné dans SkiSchoolPane : " + selectedTab);
                 
                 if (selectedTab.equals("Afficher/Modifier") || selectedTab.equals("Créer")) {
-                    refreshStudentData();  // Refresh data when switching between tabs
+                    refreshStudentData();
+                    refreshInstructorData();
                 }
             }
         });
@@ -154,6 +155,15 @@ public class MainFrame extends JFrame {
 	    DSkierPanel dSkierPanel = (DSkierPanel) ((JTabbedPane) ((JTabbedPane) contentPane.getComponent(0)).getComponentAt(0)).getComponentAt(3);
 	    dSkierPanel.loadStudentData();
     }
+	
+	public void refreshInstructorData() {
+		CInstructorPanel cInstructorPanel = (CInstructorPanel) ((JTabbedPane) ((JTabbedPane) contentPane.getComponent(0)).getComponentAt(1)).getComponentAt(2);
+		cInstructorPanel.loadInstructorData();
+		
+		DInstructorPanel dInstructorPanel = (DInstructorPanel) ((JTabbedPane) ((JTabbedPane) contentPane.getComponent(0)).getComponentAt(0)).getComponentAt(2);
+		dInstructorPanel.loadInstructorData();
+		
+	}
 	
 	private void handleExit() {
         int choice = JOptionPane.showConfirmDialog(

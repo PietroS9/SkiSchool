@@ -12,6 +12,7 @@ import java.util.Map;
 
 import be.sanna.SkiSchool.POJO.Accreditation;
 import be.sanna.SkiSchool.POJO.Instructor;
+import be.sanna.SkiSchool.POJO.Student;
 import be.sanna.SkiSchool.Utilities.ConnectionJDBC;
 
 public class InstructorDAO {
@@ -89,6 +90,10 @@ public class InstructorDAO {
 		instructors.add(instructor_);
 	}
 	
+	public void removeInstructor(Instructor instructor_) {
+		instructors.remove(instructor_);
+	}
+
 	public int getNextID() {
 		String getNextIDQuery = "SELECT PERSONS_SEQ.NEXTVAL FROM dual";
 		int stdID = -1;
@@ -143,5 +148,61 @@ public class InstructorDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void updateToDB(Instructor instructor) {
+		String updateQuery = "UPDATE persons SET firstname=?, lastname=?, birthDAte=? WHERE personID=?";
+		String deleteQuery = "DELETE FROM INSTRUCTORS_ACCREDITATIONS WHERE personID = ?";
+		String insertAccrQuery = "INSERT INTO instructors_accreditations VALUES (?,?)";
+		
+		try(PreparedStatement pstmtPersons = conn.prepareStatement(updateQuery);
+			PreparedStatement pstmtDeleteAccr = conn.prepareStatement(deleteQuery);
+			PreparedStatement pstmtInsertAccr = conn.prepareStatement(insertAccrQuery)){
+			
+			//Update person
+			pstmtPersons.setString(1, instructor.getFirstName());
+			pstmtPersons.setString(2, instructor.getLastName());
+			pstmtPersons.setDate(3, java.sql.Date.valueOf(instructor.getDob()));
+			pstmtPersons.setInt(4, instructor.getId());
+			pstmtPersons.executeUpdate();
+			
+			//Clean all accreditations linked to instructor
+			pstmtDeleteAccr.setInt(1, instructor.getId());
+			pstmtDeleteAccr.executeUpdate();
+			
+			//Insert all accreditations of instructor
+			for(Accreditation accr : instructor.getAccreditations()) {
+				pstmtInsertAccr.setInt(1, instructor.getId());
+				pstmtInsertAccr.setInt(2, accr.getAccrId());
+				pstmtInsertAccr.executeUpdate();
+			}	
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void deleteToDB(Instructor instructorToDelete) {
+		String deleteInst_AccrQuery = "DELETE FROM INSTRUCTORS_ACCREDITATIONS WHERE PERSONID = ?";
+		String deleteInstructorQuery = "DELETE FROM INSTRUCTORS WHERE PERSONID = ?";
+		String deletePersonsQuery = "DELETE FROM PERSONS WHERE PERSONID = ?";
+		
+		try (PreparedStatement pstmtINst_AccrDelete = conn.prepareStatement(deleteInst_AccrQuery);
+			 PreparedStatement pstmtInstDelete = conn.prepareStatement(deleteInstructorQuery);
+			 PreparedStatement pstmtPrsDelete = conn.prepareStatement(deletePersonsQuery)){
+			
+			pstmtINst_AccrDelete.setInt(1, instructorToDelete.getId());
+			pstmtINst_AccrDelete.executeUpdate();
+			
+			pstmtInstDelete.setInt(1, instructorToDelete.getId());
+			pstmtInstDelete.executeUpdate();
+			
+			pstmtPrsDelete.setInt(1, instructorToDelete.getId());
+			pstmtPrsDelete.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		removeInstructor(instructorToDelete);
 	}
 }

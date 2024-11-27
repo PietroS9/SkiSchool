@@ -1,6 +1,5 @@
 package be.sanna.SkiSchool.JFrames;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -81,7 +80,7 @@ public class CInstructorPanel extends JPanel {
 		panel.add(lbl_info_birthDate);
 		
 		lbl_info_accreditations = new JLabel("Accreditation(s) :");
-		lbl_info_accreditations.setBounds(21, 173, 85, 14);
+		lbl_info_accreditations.setBounds(21, 173, 106, 14);
 		panel.add(lbl_info_accreditations);
 		
 		lbl_info_LN = new JLabel("Nom :");
@@ -158,7 +157,7 @@ public class CInstructorPanel extends JPanel {
 	}
 	
 	//Methods
-	private void loadInstructorData() {
+	protected void loadInstructorData() {
 		
 		List<Instructor> instructors = instructor.getAllInstructors(instructorDAO, accrDAO.getAllAccreditations());
 		

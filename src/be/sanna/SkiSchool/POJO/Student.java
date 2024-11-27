@@ -90,6 +90,10 @@ public class Student extends Person{
 		dao.addStudent(this);
 	}
 	
+	public void removeStudent(StudentDAO dao) {
+		dao.removeStudent(this);
+	}
+	
 	public void insertToDB(StudentDAO dao) {
 		dao.insertToDB(this);
 	}

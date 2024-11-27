@@ -162,7 +162,19 @@ public class Instructor extends Person{
 		dao.addInstructor(this);
 	}
 	
+	public void removeInstructor(InstructorDAO dao) {
+		dao.removeInstructor(this);
+	}
+	
 	public void insertToDB(InstructorDAO dao) {
 		dao.insertToDB(this);
+	}
+	
+	public void updateToDB(InstructorDAO dao) {
+		dao.updateToDB(this);
+	}
+	
+	public void deleteToDB(InstructorDAO dao) {
+		dao.deleteToDB(this);
 	}
 }

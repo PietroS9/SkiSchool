@@ -10,12 +10,10 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
@@ -133,7 +131,6 @@ public class DSkierPanel extends JPanel {
 		btnUpdate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				updateStudent();
-				//loadStudentData();
 			}
 		});
 		btnUpdate.setBounds(26, 309, 165, 41);
@@ -179,7 +176,7 @@ public class DSkierPanel extends JPanel {
 		String searchID = text_search_StudentID.getText().trim();
 		
 		if (searchID.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Veuillez entrer un ID de skieur.", "Erreur", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Veuillez entrer un ID de skieur/euse.", "Erreur", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -199,7 +196,7 @@ public class DSkierPanel extends JPanel {
                 text_info_LN.setText(foundStudent.getLastName());
                 dateChooser_info_birthDate.setDate(java.sql.Date.valueOf(foundStudent.getDob()));
             } else {
-                JOptionPane.showMessageDialog(null, "Aucun skieur trouvé avec cet ID.", "Erreur", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Aucun(e) skieur/euse trouvé(e) avec cet ID.", "Erreur", JOptionPane.ERROR_MESSAGE);
             }
 
         } catch (NumberFormatException ex) {
@@ -217,7 +214,7 @@ public class DSkierPanel extends JPanel {
 		String idText = text_search_StudentID.getText().trim();
 
         if (idText.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Veuillez entrer un ID de skieur pour mettre à jour.", "Erreur", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Veuillez entrer un ID de skieur/euse pour mettre à jour.", "Erreur", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -235,6 +232,14 @@ public class DSkierPanel extends JPanel {
 
             if (updatedFirstName.isEmpty() || updatedLastName.isEmpty() || updatedDob == null) {
                 JOptionPane.showMessageDialog(null, "Tous les champs doivent être remplis.", "Erreur", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            if (updatedFirstName.length() > 20 || updatedLastName.length() > 20) {
+                JOptionPane.showMessageDialog(null, 
+                    "Le prénom et le nom ne doivent pas dépasser 20 caractères.", 
+                    "Erreur", 
+                    JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
@@ -257,7 +262,7 @@ public class DSkierPanel extends JPanel {
             }
 
             if (!found) {
-                JOptionPane.showMessageDialog(null, "Aucun skieur trouvé avec cet ID.", "Erreur", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Aucun(e) skieur/euse trouvé(e) avec cet ID.", "Erreur", JOptionPane.ERROR_MESSAGE);
             }
 
         } catch (NumberFormatException ex) {
@@ -269,7 +274,7 @@ public class DSkierPanel extends JPanel {
 		String idText = text_search_StudentID.getText().trim();
 
 	    if (idText.isEmpty()) {
-	        JOptionPane.showMessageDialog(null, "Veuillez entrer un ID de skieur à supprimer.", "Erreur", JOptionPane.ERROR_MESSAGE);
+	        JOptionPane.showMessageDialog(null, "Veuillez entrer un ID de skieur/euse à supprimer.", "Erreur", JOptionPane.ERROR_MESSAGE);
 	        return;
 	    }
 
@@ -281,11 +286,11 @@ public class DSkierPanel extends JPanel {
 	            if (student.getId() == studentId) {
 	            	
 	                student.deleteToDB(studentDAO);
-	                studentDAO.getStudents().remove(student);
+	                student.removeStudent(studentDAO);
 	                
 	                loadStudentData();
 	                
-	                JOptionPane.showMessageDialog(null, "Le skieur a été supprimé avec succès.", "Succès", JOptionPane.INFORMATION_MESSAGE);
+	                JOptionPane.showMessageDialog(null, "Le/La skieur/euse a été supprimé(e) avec succès.", "Succès", JOptionPane.INFORMATION_MESSAGE);
 	                clear();
 	                text_search_StudentID.setText("");
 	                found = true;
@@ -294,7 +299,7 @@ public class DSkierPanel extends JPanel {
 	        }
 
 	        if (!found) {
-	            JOptionPane.showMessageDialog(null, "Aucun skieur trouvé avec cet ID.", "Erreur", JOptionPane.ERROR_MESSAGE);
+	            JOptionPane.showMessageDialog(null, "Aucun(e) skieur/euse trouvé(e) avec cet ID.", "Erreur", JOptionPane.ERROR_MESSAGE);
 	        }
 
 	    } catch (NumberFormatException ex) {

@@ -161,6 +161,6 @@ public class CSkierPanel extends JPanel {
         textLN.setText("");
         dobDateChooser.setDate(null);
         
-        JOptionPane.showMessageDialog(this, "Le Skieur/Skieuse a été ajouté(e) avec succès.", "Succès", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(this, "Le/La Skieur/Skieuse a été ajouté(e) avec succès.", "Succès", JOptionPane.INFORMATION_MESSAGE);
 	}
 }
