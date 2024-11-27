@@ -105,19 +105,19 @@ public class CSkierPanel extends JPanel {
 	}
 	
 	//Methods
-	private void loadStudentData() {
+	protected void loadStudentData() {
 
         List<Student> students = student.getAllStudents(studentDAO);
 
-        updateTable();
+        updateTable(students);
 	}
 	
-	private void updateTable() {
+	private void updateTable(List<Student> students) {
         String[] columnNames = {"N° skieur", "Prénom", "Nom", "Date de naissance"};
-        Object[][] data = new Object[studentDAO.getWStudents().size()][4];
+        Object[][] data = new Object[studentDAO.getStudents().size()][4];
 
-        for (int i = 0; i < studentDAO.getWStudents().size(); i++) {
-            Student student = studentDAO.getWStudents().get(i);
+        for (int i = 0; i < students.size(); i++) {
+            Student student = students.get(i);
             data[i][0] = student.getId();
             data[i][1] = student.getFirstName();
             data[i][2] = student.getLastName();
@@ -151,14 +151,14 @@ public class CSkierPanel extends JPanel {
         }
         
         Student newStudent = new Student();
-        newStudent.setID(studentDAO.getWStudents().size() + 21);
+        newStudent.setID(studentDAO.getNextID());
         newStudent.setFirstName(firstName);
         newStudent.setLastName(lastName);
         newStudent.setDob(birthDate);
+        
+        newStudent.insertToDB(studentDAO);
 
-        newStudent.addStudent(studentDAO);
-
-        updateTable();
+        loadStudentData();
 
         textFN.setText("");
         textLN.setText("");

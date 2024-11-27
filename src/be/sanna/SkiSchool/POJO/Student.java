@@ -90,8 +90,16 @@ public class Student extends Person{
 		dao.addStudent(this);
 	}
 	
-	public void SyncStudentsToDB(StudentDAO dao) {
-		dao.SyncStudentsToDB();
+	public void insertToDB(StudentDAO dao) {
+		dao.insertToDB(this);
+	}
+	
+	public void updateToDB(StudentDAO dao) {
+		dao.updateToDB(this);
+	}
+	
+	public void deleteToDB(StudentDAO dao) {
+		dao.deleteToDB(this);
 	}
 	
 }

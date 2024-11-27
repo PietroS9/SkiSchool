@@ -4,20 +4,19 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import be.sanna.SkiSchool.DAO.*;
 
 import javax.swing.JTabbedPane;
-import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
-import javax.swing.JDesktopPane;
 import java.awt.Font;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.sql.Connection;
 import java.awt.Color;
-import javax.swing.JTextField;
 import javax.swing.JLabel;
 
 public class MainFrame extends JFrame {
@@ -25,7 +24,7 @@ public class MainFrame extends JFrame {
 	//Attributes
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private Connection conn=null;
+	private Connection conn = null;
 	private AccreditationDAO accrDAO = new AccreditationDAO();
 	//private BookingDAO bookingDAO = new BookingDAO();
 	private InstructorDAO instructorDAO = new InstructorDAO();
@@ -85,7 +84,7 @@ public class MainFrame extends JFrame {
 		DisplayPane.addTab("Instructeur", new DInstructorPanel());
 		
 		JTabbedPane DSkierPane = new JTabbedPane(JTabbedPane.TOP);
-		DisplayPane.addTab("Skieur", new DSkierPanel());						//ajouter studentDAO
+		DisplayPane.addTab("Skieur", new DSkierPanel(studentDAO));
 		
 		JTabbedPane CreatePane = new JTabbedPane(JTabbedPane.TOP);
 		CreatePane.setBackground(Color.LIGHT_GRAY);
@@ -113,26 +112,60 @@ public class MainFrame extends JFrame {
 		lblLogo.setIcon(new ImageIcon(MainFrame.class.getResource("/images/LogoLarge.jpg")));
 		lblLogo.setBounds(430, 11, 180, 120);
 		panel.add(lblLogo);
+		
+		SkiSchoolPane.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                int selectedIndex = SkiSchoolPane.getSelectedIndex();
+                String selectedTab = SkiSchoolPane.getTitleAt(selectedIndex);
+                System.out.println("Onglet sélectionné dans SkiSchoolPane : " + selectedTab);
+                
+                if (selectedTab.equals("Afficher/Modifier") || selectedTab.equals("Créer")) {
+                    refreshStudentData();  // Refresh data when switching between tabs
+                }
+            }
+        });
+
+        DisplayPane.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                int selectedIndex = DisplayPane.getSelectedIndex();
+                String selectedTab = DisplayPane.getTitleAt(selectedIndex);
+                System.out.println("Onglet sélectionné dans DisplayPane : " + selectedTab);
+            }
+        });
+        
+        CreatePane.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                int selectedIndex = CreatePane.getSelectedIndex();
+                String selectedTab = CreatePane.getTitleAt(selectedIndex);
+                System.out.println("Onglet sélectionné dans CreatePane : " + selectedTab);
+            }
+        });
 	}
 	
 	//Methods
+	public void refreshStudentData() {
+		
+		CSkierPanel cSkierPanel = (CSkierPanel) ((JTabbedPane) ((JTabbedPane) contentPane.getComponent(0)).getComponentAt(1)).getComponentAt(3);
+	    cSkierPanel.loadStudentData();
+
+	    DSkierPanel dSkierPanel = (DSkierPanel) ((JTabbedPane) ((JTabbedPane) contentPane.getComponent(0)).getComponentAt(0)).getComponentAt(3);
+	    dSkierPanel.loadStudentData();
+    }
+	
 	private void handleExit() {
         int choice = JOptionPane.showConfirmDialog(
             this,
-            "Voulez-vous sauvegarder les modifications avant de quitter ?",
+            "Voulez-vous vraiment quitter l'application ?",
             "Confirmation",
-            JOptionPane.YES_NO_CANCEL_OPTION,
+            JOptionPane.YES_NO_OPTION,
             JOptionPane.QUESTION_MESSAGE
         );
 
         if (choice == JOptionPane.YES_OPTION) {
-            studentDAO.SyncStudentsToDB();
-            //instructorDAO.SyncInstructorsToDB();
-            //Ajouter les autres fonctions de synchronisation
-            System.out.println("Modifications sauvegardées.");
             dispose();
-        } else if (choice == JOptionPane.NO_OPTION) {
-            dispose();
-        }
+        } 
     }
 }

@@ -113,19 +113,25 @@ public class InstructorDAO {
 				 //if newInstructor --> insert
 				 if(existingInstructor == null) {
 					 
+					 //Insert into persons
 					pstmtPersons.setInt(1, wInstructor.getId());
 	                pstmtPersons.setString(2, wInstructor.getFirstName());
 	                pstmtPersons.setString(3, wInstructor.getLastName());
 	                pstmtPersons.setDate(4, java.sql.Date.valueOf(wInstructor.getDob()));
 	                pstmtPersons.executeUpdate();
 	
+	                //insert into instructors
 	                pstmtInstructors.setInt(1, wInstructor.getId());
 	                pstmtInstructors.executeUpdate();
 					 
-					 for(Accreditation accr : wInstructor.getAccreditations()) {
-						 System.out.println("Vérification pour instructeur ID: " + wInstructor.getId() 
-						 						+ ", accréditation ID: " + accr.getAccrId());
-					 }
+					 /*for(Accreditation accr : wInstructor.getAccreditations()) {
+						 System.out.println("Vérification pour instructeur ID: " + wInstructor.getId()
+						 + "Nom : " + wInstructor.getFirstName()
+						 + "Prenom : " + wInstructor.getLastName()
+						 + "DOB : " + wInstructor.getDob()
+ 						 + ", accréditation ID: " + accr.getAccrId()
+ 						 + "Name :" + accr.getName());
+					 }*/
 					 
 					 for(Accreditation accr : wInstructor.getAccreditations()) {
 						 
@@ -136,8 +142,8 @@ public class InstructorDAO {
 					
 					 instructors.add(wInstructor);
 				 //if instructor has changed
-				 } else if (!existingInstructor.equals(wInstructor)) {
-					 
+				 } else {
+					 System.out.println("Je rentre dans le else");
 					 //Clean all linked accreditations
 					 pstmtClean.setInt(1, wInstructor.getId());
 					 pstmtClean.executeUpdate();
