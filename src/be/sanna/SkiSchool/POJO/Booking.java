@@ -1,6 +1,6 @@
-package be.sanna.SkiSchool;
+package be.sanna.SkiSchool.POJO;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class Booking {
 
@@ -12,10 +12,15 @@ public class Booking {
 	private int duration; 
 	private boolean insurance;
 	private boolean individual;
-	private Date datePrivateLesson;
+	private LocalDate datePrivateLesson;
+	private Student student;
+	private Instructor instructor;
+	private Lesson lesson;
+	
 	
 	//Constructor
-	public Booking(Period period_, double price_, int duration_, boolean insurance_, boolean individual_, Date dpl_) {
+	public Booking(Period period_, double price_, int duration_, boolean insurance_, 
+			boolean individual_, LocalDate dpl_, Student student_, Instructor instructor_, Lesson lesson_) {
 		this.bookId = bookNum++;
 		this.period = period_;
 		this.price = price_;
@@ -23,6 +28,22 @@ public class Booking {
 		this.insurance = insurance_;
 		this.individual = individual_;
 		this.datePrivateLesson = dpl_;
+		this.student = student_;
+		this.instructor = instructor_;
+		this.lesson = lesson_;
+	}
+	
+	public Booking() {
+		this.bookId = bookNum++;
+		this.period = null;
+		this.price = 0;
+		this.duration = 0;
+		this.insurance = false;
+		this.individual = false;
+		this.datePrivateLesson = null;
+		this.student = null;
+		this.instructor = null;
+		this.lesson = null;
 	}
 	
 	//Getter
@@ -50,8 +71,20 @@ public class Booking {
 		return individual;
 	}
 	
-	public Date getDatePrivateLesson() {
+	public LocalDate getDatePrivateLesson() {
 		return datePrivateLesson;
+	}
+	
+	public Student getStudent() {
+		return student;
+	}
+	
+	public Instructor getInstructor() {
+		return instructor;
+	}
+	
+	public Lesson getLesson() {
+		return lesson;
 	}
 	
 	//Setter	
@@ -75,9 +108,22 @@ public class Booking {
 		this.individual = individual_;
 	}
 	
-	public void setDatePrivateLesson(Date dpl_) {
+	public void setDatePrivateLesson(LocalDate dpl_) {
 		this.datePrivateLesson = dpl_;
 	}
+	
+	public void setStudent(Student student_) {
+		this.student = student_;
+	}
+	
+	public void setInstructor(Instructor instructor_) {
+		this.instructor = instructor_;
+	}
+	
+	public void setLesson(Lesson lesson_) {
+		this.lesson = lesson_;
+	}
+	
 	//Methods
 	
 	public double calculatePrice() {
