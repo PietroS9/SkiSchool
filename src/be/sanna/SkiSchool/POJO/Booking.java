@@ -6,12 +6,9 @@ public class Booking {
 
 	//Attributes
 	private int bookId;
-	private static int bookNum = 1;
-	private Period period;
-	private double price;
-	private int duration; 
 	private boolean insurance;
-	private boolean individual;
+	private double price;
+	private Period period;
 	private LocalDate datePrivateLesson;
 	private Student student;
 	private Instructor instructor;
@@ -19,14 +16,12 @@ public class Booking {
 	
 	
 	//Constructor
-	public Booking(Period period_, double price_, int duration_, boolean insurance_, 
-			boolean individual_, LocalDate dpl_, Student student_, Instructor instructor_, Lesson lesson_) {
-		this.bookId = bookNum++;
+	public Booking(int id_, Period period_, double price_, boolean insurance_, LocalDate dpl_, 
+				   Student student_,Instructor instructor_, Lesson lesson_) {
+		this.bookId = id_;
 		this.period = period_;
 		this.price = price_;
-		this.duration = duration_;
 		this.insurance = insurance_;
-		this.individual = individual_;
 		this.datePrivateLesson = dpl_;
 		this.student = student_;
 		this.instructor = instructor_;
@@ -34,12 +29,10 @@ public class Booking {
 	}
 	
 	public Booking() {
-		this.bookId = bookNum++;
+		this.bookId = 0;
 		this.period = null;
 		this.price = 0;
-		this.duration = 0;
 		this.insurance = false;
-		this.individual = false;
 		this.datePrivateLesson = null;
 		this.student = null;
 		this.instructor = null;
@@ -59,16 +52,8 @@ public class Booking {
 		return price;
 	}
 	
-	public int getDuration() {
-		return duration;
-	}
-	
 	public boolean getInsurance() {
 		return insurance;
-	}
-	
-	public boolean getIndividual() {
-		return individual;
 	}
 	
 	public LocalDate getDatePrivateLesson() {
@@ -87,7 +72,11 @@ public class Booking {
 		return lesson;
 	}
 	
-	//Setter	
+	//Setter
+	public void setID(int bookingID_) {
+		this.bookId = bookingID_;
+	}
+	
 	public void setPeriod(Period period_) {
 		this.period = period_;
 	}
@@ -96,16 +85,8 @@ public class Booking {
 		this.price = price_;
 	}
 	
-	public void setDuration(int duration_) {
-		this.duration = duration_;
-	}
-	
 	public void setInsurance(boolean insurance_) {
 		this.insurance = insurance_;
-	}
-	
-	public void setIndividual(boolean individual_) {
-		this.individual = individual_;
 	}
 	
 	public void setDatePrivateLesson(LocalDate dpl_) {
@@ -125,10 +106,12 @@ public class Booking {
 	}
 	
 	//Methods
-	
 	public double calculatePrice() {
-		//Not finished yet
-		return 0;
+		if(insurance == true) {
+			return lesson.getLessonPrice() + 20;
+		}else {
+			return lesson.getLessonPrice();
+		}
 	}
 	
 }

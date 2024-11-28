@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import be.sanna.SkiSchool.POJO.Accreditation;
+import be.sanna.SkiSchool.POJO.LessonType;
 import be.sanna.SkiSchool.Utilities.ConnectionJDBC;
 
 public class AccreditationDAO {
@@ -33,21 +34,23 @@ public class AccreditationDAO {
 	
 	//Methods
 	public List<Accreditation> getAllAccreditations(){
-		
-		String query = "SELECT accrID, name_ FROM ACCREDITATIONS";
-		
-		try(Statement stmt = conn.createStatement();
-				ResultSet rs = stmt.executeQuery(query)){
+		if(accreditations.isEmpty()) {
 			
-			while (rs.next()) {
-				Accreditation accr = new Accreditation();
-				accr.setID(rs.getInt("accrID"));
-				accr.setName(rs.getString("name_"));
+			String query = "SELECT accrID, name_ FROM ACCREDITATIONS";
+			
+			try(Statement stmt = conn.createStatement();
+					ResultSet rs = stmt.executeQuery(query)){
 				
-				accreditations.add(accr);
+				while (rs.next()) {
+					Accreditation accr = new Accreditation();
+					accr.setID(rs.getInt("accrID"));
+					accr.setName(rs.getString("name_"));
+					
+					accreditations.add(accr);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
 			}
-		} catch (SQLException e) {
-			e.printStackTrace();
 		}
 		return accreditations;
 	}

@@ -3,19 +3,20 @@ package be.sanna.SkiSchool.POJO;
 import java.util.ArrayList;
 import java.util.List;
 
+import be.sanna.SkiSchool.DAO.LessonTypeDAO;
+
 public class LessonType {
 
 	//Attributes
 	private int lessonTypeId;
-	private static int lessonTypeNum = 1;
 	private Level level;
 	private double price;
 	private Accreditation accreditation;
 	private List<Lesson> lessons;
 	
 	//Constructor
-	public LessonType(Level lvl, double price_, Accreditation accr_) {
-		this.lessonTypeId = lessonTypeNum++;
+	public LessonType(int lessonTypeID_, Level lvl, double price_, Accreditation accr_) {
+		this.lessonTypeId = lessonTypeID_;
 		this.level = lvl;
 		this.price = price_;
 		this.accreditation = accr_;
@@ -23,7 +24,7 @@ public class LessonType {
 	}
 	
 	public LessonType() {
-		this.lessonTypeId = lessonTypeNum++;
+		this.lessonTypeId = 0;
 		this.level = null;
 		this.price = 0;
 		this.accreditation = null;
@@ -52,6 +53,10 @@ public class LessonType {
 	}
 	
 	//Setter
+	public void setLessonTypeID(int lessonTypeID_) {
+		this.lessonTypeId = lessonTypeID_;
+	}
+	
 	public void setLevel(Level lvl) {
 		this.level = lvl;
 	}
@@ -91,5 +96,10 @@ public class LessonType {
 			throw new IllegalArgumentException("Lesson can't be null !");
 		}
 		lessons.add(lesson);
+	}
+	
+	@Override
+	public String toString() {
+		return getLevel().getDescription();
 	}
 }

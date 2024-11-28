@@ -86,6 +86,19 @@ public class InstructorDAO {
 		return instructors;	
 	}
 	
+	public List<Instructor> getInstructorsByAccreditation(Accreditation accr){
+		List<Instructor> instructors_ = new ArrayList<>();
+		
+		for(Instructor inst : instructors) {
+			for(Accreditation accr_ : inst.getAccreditations()) {
+				if(accr_.getAccrId() == accr.getAccrId()) {
+					instructors_.add(inst);
+				}
+			}
+		}
+		return instructors_;
+	}
+	
 	public void addInstructor(Instructor instructor_) {
 		instructors.add(instructor_);
 	}

@@ -28,10 +28,9 @@ public class MainFrame extends JFrame {
 	private AccreditationDAO accrDAO = new AccreditationDAO();
 	//private BookingDAO bookingDAO = new BookingDAO();
 	private InstructorDAO instructorDAO = new InstructorDAO();
-	//private LessonDAO lessonDAO = new LessonDAO();
-	//private LessonTypeDAO lessonTypeDAO = new LessonTypeDAO();
+	private LessonDAO lessonDAO = new LessonDAO();
+	private LessonTypeDAO lessonTypeDAO = new LessonTypeDAO();
 	//private PeriodDAO periodDAO = new PeriodDAO();
-	//private PersonDAO personDAO = new PersonDAO();
 	private StudentDAO studentDAO = new StudentDAO();
 
 	//Application
@@ -94,7 +93,7 @@ public class MainFrame extends JFrame {
 		CreatePane.addTab("Réservations", new CBookingPanel());
 		
 		JTabbedPane CLessonPane = new JTabbedPane(JTabbedPane.TOP);
-		CreatePane.addTab("Cours", new CLessonPanel());
+		CreatePane.addTab("Cours", new CLessonPanel(lessonDAO,instructorDAO, accrDAO, lessonTypeDAO));
 		
 		JTabbedPane CInstructorPane = new JTabbedPane(JTabbedPane.TOP);
 		CreatePane.addTab("Instructeur", new CInstructorPanel(instructorDAO, accrDAO));
@@ -123,6 +122,7 @@ public class MainFrame extends JFrame {
                 if (selectedTab.equals("Afficher/Modifier") || selectedTab.equals("Créer")) {
                     refreshStudentData();
                     refreshInstructorData();
+                    refreshLessonData();
                 }
             }
         });
@@ -162,6 +162,15 @@ public class MainFrame extends JFrame {
 		
 		DInstructorPanel dInstructorPanel = (DInstructorPanel) ((JTabbedPane) ((JTabbedPane) contentPane.getComponent(0)).getComponentAt(0)).getComponentAt(2);
 		dInstructorPanel.loadInstructorData();
+		
+	}
+	
+	public void refreshLessonData() {
+		CLessonPanel cLessonPanel = (CLessonPanel) ((JTabbedPane) ((JTabbedPane) contentPane.getComponent(0)).getComponentAt(1)).getComponentAt(1);
+		cLessonPanel.loadLessonData();
+		
+		//DInstructorPanel dInstructorPanel = (DInstructorPanel) ((JTabbedPane) ((JTabbedPane) contentPane.getComponent(0)).getComponentAt(0)).getComponentAt(2);
+		//dInstructorPanel.loadInstructorData();
 		
 	}
 	
