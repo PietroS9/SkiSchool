@@ -77,7 +77,7 @@ public class MainFrame extends JFrame {
 		DisplayPane.addTab("Réservations", new DBookingPanel());
 		
 		JTabbedPane DLessonPane = new JTabbedPane(JTabbedPane.TOP);
-		DisplayPane.addTab("Cours", new DLessonPanel());
+		DisplayPane.addTab("Cours", new DLessonPanel(lessonDAO,instructorDAO, accrDAO, lessonTypeDAO));
 		
 		JTabbedPane DInstructorPane = new JTabbedPane(JTabbedPane.TOP);
 		DisplayPane.addTab("Instructeur", new DInstructorPanel(instructorDAO, accrDAO)); 
@@ -169,10 +169,19 @@ public class MainFrame extends JFrame {
 		CLessonPanel cLessonPanel = (CLessonPanel) ((JTabbedPane) ((JTabbedPane) contentPane.getComponent(0)).getComponentAt(1)).getComponentAt(1);
 		cLessonPanel.loadLessonData();
 		
-		//DInstructorPanel dInstructorPanel = (DInstructorPanel) ((JTabbedPane) ((JTabbedPane) contentPane.getComponent(0)).getComponentAt(0)).getComponentAt(2);
-		//dInstructorPanel.loadInstructorData();
+		DLessonPanel dLessonPanel = (DLessonPanel) ((JTabbedPane) ((JTabbedPane) contentPane.getComponent(0)).getComponentAt(0)).getComponentAt(1);
+		dLessonPanel.loadLessonData();
 		
 	}
+	
+	/*public void refreshBookingData() {
+		CBookingPanel cBookingPanel = (CBookingPanel) ((JTabbedPane) ((JTabbedPane) contentPane.getComponent(0)).getComponentAt(1)).getComponentAt(1);
+		cBookingPanel.loadBookingData();
+		
+		DBookingPanel dBookingPanel = (DBookingPanel) ((JTabbedPane) ((JTabbedPane) contentPane.getComponent(0)).getComponentAt(0)).getComponentAt(1);
+		dBookingPanel.loadBookingData();
+		
+	}*/
 	
 	private void handleExit() {
         int choice = JOptionPane.showConfirmDialog(
