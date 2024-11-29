@@ -2,6 +2,8 @@ package be.sanna.SkiSchool.JFrames;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +12,7 @@ import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.TitledBorder;
@@ -25,6 +28,7 @@ import be.sanna.SkiSchool.POJO.Accreditation;
 import be.sanna.SkiSchool.POJO.Instructor;
 import be.sanna.SkiSchool.POJO.Lesson;
 import be.sanna.SkiSchool.POJO.LessonType;
+import be.sanna.SkiSchool.POJO.Level;
 
 import javax.swing.JRadioButton;
 
@@ -64,6 +68,9 @@ public class CLessonPanel extends JPanel {
 	private List<Accreditation> accrs = new ArrayList<>();
 	private List<LessonType> lessonTypes = new ArrayList<>();
 	private List<Instructor> instructors = new ArrayList<>();
+	private LocalDate nLDate = null;
+	private Lesson newLesson;
+	private Level level_;
 	
 	//Constructor
 	public CLessonPanel(LessonDAO lessonDAO_, InstructorDAO instructorDAO_, AccreditationDAO accrDAO_,
@@ -231,7 +238,7 @@ public class CLessonPanel extends JPanel {
 		btnCreate.setBounds(165, 421, 104, 41);
 		btnCreate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//createLesson();
+				createLesson();
 			}
 		});
 		add(btnCreate);
@@ -282,5 +289,69 @@ public class CLessonPanel extends JPanel {
 	
 	private void createLesson() {
 		
+		LocalDate selectedDate = lessonDateChooser.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+	    if (selectedDate == null) {
+	        JOptionPane.showMessageDialog(this, "Veuillez sélectionner une date valide.", "Erreur", JOptionPane.ERROR_MESSAGE);
+	        return;
+	    }
+	    
+	    LocalDate minDate = LocalDate.of(2024, 12, 6);
+	    LocalDate maxDate = LocalDate.of(2025, 5, 3);
+
+	    if (selectedDate.isBefore(minDate) || selectedDate.isAfter(maxDate)) {
+	        JOptionPane.showMessageDialog(this, 
+	            "La date doit être comprise entre le 06/12/2024 et le 03/05/2025.", 
+	            "Erreur", JOptionPane.ERROR_MESSAGE);
+	        return;
+	    } else {
+	    	int minStd = 5;
+	    	int maxStd = 8;
+	    	if(( ((Accreditation) cBox_info_Accreditations.getSelectedItem()).getAccrId()==3 ||
+	    	   ((Accreditation) cBox_info_Accreditations.getSelectedItem()).getAccrId()==4 ) && 
+	    	   ( ((LessonType)cBox_info_LessonType.getSelectedItem()).getLevel() != level_.COMPETITION &&
+	    	   ((LessonType)cBox_info_LessonType.getSelectedItem()).getLevel() != level_.HORS_PISTE)) {
+	    		minStd = 6;
+	    		maxStd = 10;
+	    	}
+			if(rdbtn_Collective.isSelected()) {
+				if(rdbtn_AM.isSelected()) {
+					newLesson = new Lesson(lessonDAO.getNextID(),false,selectedDate,false,1,minStd,maxStd,
+							(LessonType)cBox_info_LessonType.getSelectedItem(),(Instructor)cBox_info_InstructorName.getSelectedItem());
+				} else {
+					newLesson = new Lesson(lessonDAO.getNextID(),false,selectedDate,true,1,minStd,maxStd,
+							(LessonType)cBox_info_LessonType.getSelectedItem(),(Instructor)cBox_info_InstructorName.getSelectedItem());
+				}
+			} else {
+				if(rdbtn_duration_1.isSelected()) {
+					newLesson = new Lesson(lessonDAO.getNextID(),true,selectedDate,false,1,minStd,maxStd,
+							(LessonType)cBox_info_LessonType.getSelectedItem(),(Instructor)cBox_info_InstructorName.getSelectedItem());
+				}else {
+					newLesson = new Lesson(lessonDAO.getNextID(),true,selectedDate,false,2,minStd,maxStd,
+							(LessonType)cBox_info_LessonType.getSelectedItem(),(Instructor)cBox_info_InstructorName.getSelectedItem());
+				}
+			}
+	    }
+	    newLesson.insertToDB(lessonDAO);
+	    
+	    loadLessonData();
+	    
+	    resetFields();
+	    
+	}
+	
+	private void resetFields() {
+	    cBox_info_Accreditations.setSelectedIndex(0);
+	    cBox_info_LessonType.removeAllItems();
+	    cBox_info_InstructorName.removeAllItems();
+	    lessonDateChooser.setDate(null);
+	    rdbtn_Collective.setSelected(true);
+	    rdbtn_AM.setEnabled(true);
+	    rdbtn_PM.setEnabled(true);
+	    rdbtn_duration_1.setEnabled(false);
+	    rdbtn_duration_2.setEnabled(false);
+	    rdbtn_AM.setSelected(true);
+	    rdbtn_duration_1.setSelected(true);
+	    
+	    JOptionPane.showMessageDialog(this, "Les champs ont été réinitialisés.", "Information", JOptionPane.INFORMATION_MESSAGE);
 	}
 }
