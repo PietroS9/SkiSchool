@@ -1,6 +1,11 @@
 package be.sanna.SkiSchool.POJO;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.util.List;
+
+import be.sanna.SkiSchool.DAO.BookingDAO;
+import be.sanna.SkiSchool.DAO.PeriodDAO;
 
 public class Booking {
 
@@ -9,20 +14,18 @@ public class Booking {
 	private boolean insurance;
 	private double price;
 	private Period period;
-	private LocalDate datePrivateLesson;
 	private Student student;
 	private Instructor instructor;
 	private Lesson lesson;
 	
 	
 	//Constructor
-	public Booking(int id_, Period period_, double price_, boolean insurance_, LocalDate dpl_, 
+	public Booking(int id_, Period period_, double price_, boolean insurance_,
 				   Student student_,Instructor instructor_, Lesson lesson_) {
 		this.bookId = id_;
 		this.period = period_;
 		this.price = price_;
 		this.insurance = insurance_;
-		this.datePrivateLesson = dpl_;
 		this.student = student_;
 		this.instructor = instructor_;
 		this.lesson = lesson_;
@@ -33,7 +36,6 @@ public class Booking {
 		this.period = null;
 		this.price = 0;
 		this.insurance = false;
-		this.datePrivateLesson = null;
 		this.student = null;
 		this.instructor = null;
 		this.lesson = null;
@@ -54,10 +56,6 @@ public class Booking {
 	
 	public boolean getInsurance() {
 		return insurance;
-	}
-	
-	public LocalDate getDatePrivateLesson() {
-		return datePrivateLesson;
 	}
 	
 	public Student getStudent() {
@@ -89,10 +87,6 @@ public class Booking {
 		this.insurance = insurance_;
 	}
 	
-	public void setDatePrivateLesson(LocalDate dpl_) {
-		this.datePrivateLesson = dpl_;
-	}
-	
 	public void setStudent(Student student_) {
 		this.student = student_;
 	}
@@ -107,11 +101,37 @@ public class Booking {
 	
 	//Methods
 	public double calculatePrice() {
+		int nbWeek = (int)ChronoUnit.WEEKS.between(period.getStartDate(), period.getEndDate());
 		if(insurance == true) {
-			return lesson.getLessonPrice() + 20;
+			return (lesson.getLessonPrice() * nbWeek) + 20;
 		}else {
-			return lesson.getLessonPrice();
+			return (lesson.getLessonPrice() * nbWeek);
 		}
+	}
+	
+	public List<Booking> getAllBookings(BookingDAO dao, List<Lesson> lessons, 
+										List<Student> students, List<Period> periods){
+		return dao.getAllBookings(lessons,students,periods);
+	}
+	
+	public void addBooking(BookingDAO dao) {
+		dao.addBooking(this);
+	}
+	
+	public void removeBooking(BookingDAO dao) {
+		dao.removeBooking(this);
+	}
+	
+	public void insertToDB(BookingDAO dao, PeriodDAO pdao) {
+		dao.insertToDB(this, pdao);
+	}
+	
+	public void updateToDB(BookingDAO dao, PeriodDAO pdao) {
+		dao.updateToDB(this, pdao);
+	}
+	
+	public void deleteToDB(BookingDAO dao) {
+		dao.deleteToDB(this);
 	}
 	
 }

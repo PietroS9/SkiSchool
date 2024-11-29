@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.time.LocalDate;
+import java.time.Period;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -206,6 +207,16 @@ public class CInstructorPanel extends JPanel {
             JOptionPane.showMessageDialog(null, 
                 "Le prénom et le nom ne doivent pas dépasser 20 caractères.", 
                 "Erreur", 
+                JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        LocalDate today = LocalDate.now();
+        Period age = Period.between(birthDate, today);
+        if (age.getYears() < 18) {
+            JOptionPane.showMessageDialog(this, 
+                "L'instructeur/instructrice doit avoir au moins 18 ans.", 
+                "Âge insuffisant", 
                 JOptionPane.ERROR_MESSAGE);
             return;
         }

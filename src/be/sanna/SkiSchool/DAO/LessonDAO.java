@@ -82,7 +82,7 @@ public class LessonDAO {
 							break;
 						}
 					}
-					lessons.add(lesson);
+					addLesson(lesson);
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -153,7 +153,8 @@ public class LessonDAO {
 	
 	public void updateToDB(Lesson lesson) {
 		String updateQuery = "UPDATE LESSONS SET lessondate = ?, amorpm = ?, minStudent = ?, " +
-							 "maxStudent = ?, individual = ?, duration = ? WHERE lessonid = ?";
+							 "maxStudent = ?, individual = ?, duration = ?, lessontypeid = ? " +
+							 "WHERE lessonid = ?";
 		
 		try(PreparedStatement pstmtLesson = conn.prepareStatement(updateQuery)){
 			
@@ -171,7 +172,9 @@ public class LessonDAO {
 				pstmtLesson.setInt(5, 1);
 			}
 			pstmtLesson.setInt(6, lesson.getDuration());
-			pstmtLesson.setInt(7, lesson.getLessonId());
+			System.out.println("Dans l'updat lessons : ID =" + lesson.getType().getLessonTypeId());
+			pstmtLesson.setInt(7, lesson.getType().getLessonTypeId());
+			pstmtLesson.setInt(8, lesson.getLessonId());
 			pstmtLesson.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();

@@ -26,11 +26,11 @@ public class MainFrame extends JFrame {
 	private JPanel contentPane;
 	private Connection conn = null;
 	private AccreditationDAO accrDAO = new AccreditationDAO();
-	//private BookingDAO bookingDAO = new BookingDAO();
+	private BookingDAO bookingDAO = new BookingDAO();
 	private InstructorDAO instructorDAO = new InstructorDAO();
 	private LessonDAO lessonDAO = new LessonDAO();
 	private LessonTypeDAO lessonTypeDAO = new LessonTypeDAO();
-	//private PeriodDAO periodDAO = new PeriodDAO();
+	private PeriodDAO periodDAO = new PeriodDAO();
 	private StudentDAO studentDAO = new StudentDAO();
 
 	//Application
@@ -74,7 +74,8 @@ public class MainFrame extends JFrame {
 		SkiSchoolPane.addTab("Afficher/Modifier", null, DisplayPane, null);
 		
 		JTabbedPane DBookingPane = new JTabbedPane(JTabbedPane.TOP);
-		DisplayPane.addTab("Réservations", new DBookingPanel());
+		DisplayPane.addTab("Réservations", new DBookingPanel(accrDAO, bookingDAO,instructorDAO, lessonDAO,
+															 lessonTypeDAO, periodDAO, studentDAO));
 		
 		JTabbedPane DLessonPane = new JTabbedPane(JTabbedPane.TOP);
 		DisplayPane.addTab("Cours", new DLessonPanel(lessonDAO,instructorDAO, accrDAO, lessonTypeDAO));
@@ -90,7 +91,8 @@ public class MainFrame extends JFrame {
 		SkiSchoolPane.addTab("Créer", null, CreatePane, null);
 		
 		JTabbedPane CBookingPane = new JTabbedPane(JTabbedPane.TOP);
-		CreatePane.addTab("Réservations", new CBookingPanel());
+		CreatePane.addTab("Réservations", new CBookingPanel(accrDAO, bookingDAO,instructorDAO, lessonDAO,
+				 											lessonTypeDAO, periodDAO, studentDAO));
 		
 		JTabbedPane CLessonPane = new JTabbedPane(JTabbedPane.TOP);
 		CreatePane.addTab("Cours", new CLessonPanel(lessonDAO,instructorDAO, accrDAO, lessonTypeDAO));
@@ -123,6 +125,7 @@ public class MainFrame extends JFrame {
                     refreshStudentData();
                     refreshInstructorData();
                     refreshLessonData();
+                    refreshBookingData();
                 }
             }
         });
@@ -174,14 +177,14 @@ public class MainFrame extends JFrame {
 		
 	}
 	
-	/*public void refreshBookingData() {
-		CBookingPanel cBookingPanel = (CBookingPanel) ((JTabbedPane) ((JTabbedPane) contentPane.getComponent(0)).getComponentAt(1)).getComponentAt(1);
+	public void refreshBookingData() {
+		CBookingPanel cBookingPanel = (CBookingPanel) ((JTabbedPane) ((JTabbedPane) contentPane.getComponent(0)).getComponentAt(1)).getComponentAt(0);
 		cBookingPanel.loadBookingData();
 		
-		DBookingPanel dBookingPanel = (DBookingPanel) ((JTabbedPane) ((JTabbedPane) contentPane.getComponent(0)).getComponentAt(0)).getComponentAt(1);
+		DBookingPanel dBookingPanel = (DBookingPanel) ((JTabbedPane) ((JTabbedPane) contentPane.getComponent(0)).getComponentAt(0)).getComponentAt(0);
 		dBookingPanel.loadBookingData();
 		
-	}*/
+	}
 	
 	private void handleExit() {
         int choice = JOptionPane.showConfirmDialog(

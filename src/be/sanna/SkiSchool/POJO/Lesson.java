@@ -142,8 +142,11 @@ public class Lesson {
 	}
 	
 	//Methods
+	@Override
+	public String toString() {
+		return type.getLevel().getDescription();
+	}
 	public double getLessonPrice() {
-		
 		if(individual == false) {
 			return type.getPrice();
 		} else {

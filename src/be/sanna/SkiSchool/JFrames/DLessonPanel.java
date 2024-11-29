@@ -420,6 +420,17 @@ public class DLessonPanel extends JPanel {
         					lesson_.setDuration(2);
         				}
         			}
+        			int minStd = 5;
+        	    	int maxStd = 8;
+        	    	if(( ((Accreditation) cBox_info_Accreditations.getSelectedItem()).getAccrId()==3 ||
+        	    	   ((Accreditation) cBox_info_Accreditations.getSelectedItem()).getAccrId()==4 ) && 
+        	    	   (((LessonType)cBox_info_LessonType.getSelectedItem()).getLevel() != level_.COMPETITION &&
+        	    	   ((LessonType)cBox_info_LessonType.getSelectedItem()).getLevel() != level_.HORS_PISTE)) {
+        	    		minStd = 6;
+        	    		maxStd = 10;
+        	    	}
+        	    	lesson_.setMinStudents(minStd);
+        	    	lesson_.setMaxStudents(maxStd);
         			lesson_.updateToDB(lessonDAO);
         			
         			loadLessonData();
