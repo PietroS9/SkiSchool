@@ -12,7 +12,7 @@ public enum Level {
 	HORS_PISTE("Hors-Piste"),
 	UN("1"),
 	DEUX_A_QUATRE("2 à 4"),
-	UN_A_QUATRE("1 à 4");
+	UN_A_QUATRE("De 1 à 4");
 	
 	private final String description;
 	
@@ -22,5 +22,14 @@ public enum Level {
 	
 	public String getDescription() {
 		return description;
+	}
+	
+	public static Level fromDescription(String description) {
+	    for (Level level : Level.values()) {
+	        if (level.getDescription().equalsIgnoreCase(description)) {
+	            return level;
+	        }
+	    }
+	    throw new IllegalArgumentException("Aucun niveau correspondant pour la description : " + description);
 	}
 }

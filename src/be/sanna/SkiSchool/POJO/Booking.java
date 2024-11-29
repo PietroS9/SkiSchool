@@ -1,46 +1,41 @@
 package be.sanna.SkiSchool.POJO;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.util.List;
+
+import be.sanna.SkiSchool.DAO.BookingDAO;
+import be.sanna.SkiSchool.DAO.PeriodDAO;
 
 public class Booking {
 
 	//Attributes
 	private int bookId;
-	private static int bookNum = 1;
-	private Period period;
-	private double price;
-	private int duration; 
 	private boolean insurance;
-	private boolean individual;
-	private LocalDate datePrivateLesson;
+	private double price;
+	private Period period;
 	private Student student;
 	private Instructor instructor;
 	private Lesson lesson;
 	
 	
 	//Constructor
-	public Booking(Period period_, double price_, int duration_, boolean insurance_, 
-			boolean individual_, LocalDate dpl_, Student student_, Instructor instructor_, Lesson lesson_) {
-		this.bookId = bookNum++;
+	public Booking(int id_, Period period_, double price_, boolean insurance_,
+				   Student student_,Instructor instructor_, Lesson lesson_) {
+		this.bookId = id_;
 		this.period = period_;
 		this.price = price_;
-		this.duration = duration_;
 		this.insurance = insurance_;
-		this.individual = individual_;
-		this.datePrivateLesson = dpl_;
 		this.student = student_;
 		this.instructor = instructor_;
 		this.lesson = lesson_;
 	}
 	
 	public Booking() {
-		this.bookId = bookNum++;
+		this.bookId = 0;
 		this.period = null;
 		this.price = 0;
-		this.duration = 0;
 		this.insurance = false;
-		this.individual = false;
-		this.datePrivateLesson = null;
 		this.student = null;
 		this.instructor = null;
 		this.lesson = null;
@@ -59,20 +54,8 @@ public class Booking {
 		return price;
 	}
 	
-	public int getDuration() {
-		return duration;
-	}
-	
 	public boolean getInsurance() {
 		return insurance;
-	}
-	
-	public boolean getIndividual() {
-		return individual;
-	}
-	
-	public LocalDate getDatePrivateLesson() {
-		return datePrivateLesson;
 	}
 	
 	public Student getStudent() {
@@ -87,7 +70,11 @@ public class Booking {
 		return lesson;
 	}
 	
-	//Setter	
+	//Setter
+	public void setID(int bookingID_) {
+		this.bookId = bookingID_;
+	}
+	
 	public void setPeriod(Period period_) {
 		this.period = period_;
 	}
@@ -96,20 +83,8 @@ public class Booking {
 		this.price = price_;
 	}
 	
-	public void setDuration(int duration_) {
-		this.duration = duration_;
-	}
-	
 	public void setInsurance(boolean insurance_) {
 		this.insurance = insurance_;
-	}
-	
-	public void setIndividual(boolean individual_) {
-		this.individual = individual_;
-	}
-	
-	public void setDatePrivateLesson(LocalDate dpl_) {
-		this.datePrivateLesson = dpl_;
 	}
 	
 	public void setStudent(Student student_) {
@@ -125,10 +100,38 @@ public class Booking {
 	}
 	
 	//Methods
-	
 	public double calculatePrice() {
-		//Not finished yet
-		return 0;
+		int nbWeek = (int)ChronoUnit.WEEKS.between(period.getStartDate(), period.getEndDate());
+		if(insurance == true) {
+			return (lesson.getLessonPrice() * nbWeek) + 20;
+		}else {
+			return (lesson.getLessonPrice() * nbWeek);
+		}
+	}
+	
+	public List<Booking> getAllBookings(BookingDAO dao, List<Lesson> lessons, 
+										List<Student> students, List<Period> periods){
+		return dao.getAllBookings(lessons,students,periods);
+	}
+	
+	public void addBooking(BookingDAO dao) {
+		dao.addBooking(this);
+	}
+	
+	public void removeBooking(BookingDAO dao) {
+		dao.removeBooking(this);
+	}
+	
+	public void insertToDB(BookingDAO dao, PeriodDAO pdao) {
+		dao.insertToDB(this, pdao);
+	}
+	
+	public void updateToDB(BookingDAO dao, PeriodDAO pdao) {
+		dao.updateToDB(this, pdao);
+	}
+	
+	public void deleteToDB(BookingDAO dao) {
+		dao.deleteToDB(this);
 	}
 	
 }

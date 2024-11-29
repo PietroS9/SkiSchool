@@ -118,6 +118,10 @@ public class Instructor extends Person{
 	}
 	
 	//Methods
+	@Override
+	public String toString() {
+		return getFirstName() + " " + getLastName();
+	}
 	public int CalculateAge() {
 		return super.CalculateAge();
 	}

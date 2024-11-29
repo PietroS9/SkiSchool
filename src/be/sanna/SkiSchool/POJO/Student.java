@@ -71,6 +71,10 @@ public class Student extends Person{
 	}
 	
 	//Methods
+	@Override
+	public String toString() {
+		return getFirstName() + " - " + getLastName();
+	}
 	public void addBooking(Booking booking_) {
 		if(booking_ == null) {
 			throw new IllegalArgumentException("Booking can't be null !");

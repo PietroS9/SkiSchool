@@ -93,4 +93,9 @@ public class Accreditation {
 		this.instructors.add(instructor_);
 	}
 	
+	@Override
+	public String toString() {
+		return getName();
+	}
+	
 }
