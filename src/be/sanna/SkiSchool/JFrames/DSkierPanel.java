@@ -242,6 +242,14 @@ public class DSkierPanel extends JPanel {
                     JOptionPane.ERROR_MESSAGE);
                 return;
             }
+            
+            if(updatedDob.isAfter(LocalDate.now())) {
+            	JOptionPane.showMessageDialog(null, 
+                        "Le date de naissance est incohérente.", 
+                        "Erreur", 
+                        JOptionPane.ERROR_MESSAGE);
+                    return;
+            }
 
             boolean found = false;
             for (Student student : studentDAO.getStudents()) {

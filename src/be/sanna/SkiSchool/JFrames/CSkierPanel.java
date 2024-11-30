@@ -147,6 +147,14 @@ public class CSkierPanel extends JPanel {
             return;
         }
         
+        if(birthDate.isAfter(LocalDate.now())) {
+        	JOptionPane.showMessageDialog(null, 
+                    "Le date de naissance est incohérente.", 
+                    "Erreur", 
+                    JOptionPane.ERROR_MESSAGE);
+                return;
+        }
+        
         Student newStudent = new Student();
         newStudent.setID(studentDAO.getNextID());
         newStudent.setFirstName(firstName);

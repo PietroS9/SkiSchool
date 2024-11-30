@@ -276,7 +276,10 @@ public class CBookingPanel extends JPanel {
 	    Lesson selectedLesson = (Lesson) cBox_info_Lesson.getSelectedItem();
 	    LocalDate startDate = startDateChooser.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 	    LocalDate endDate = endDateChooser.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-	    if(startDate == null || endDate == null || endDate.isBefore(startDate)==true) {
+	    LocalDate minDate = LocalDate.of(2024, 12, 6);
+	    LocalDate maxDate = LocalDate.of(2025, 5, 3);
+	    if(startDate == null || endDate == null || startDate.isBefore(minDate) || 
+	    		endDate.isAfter(maxDate) || endDate.isBefore(startDate)==true) {
 	    	JOptionPane.showMessageDialog(this, "Veuillez sélectionner des dates valides ou cohérentes.", "Erreur", JOptionPane.ERROR_MESSAGE);
 	    }    
 	    boolean isInsured = rdbtnIsInsured.isSelected();

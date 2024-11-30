@@ -72,8 +72,6 @@ public class BookingDAO {
 						if(rs.getInt("LESSONID") == lesson.getLessonId()) {
 							booking.setLesson(lesson);
 							booking.setInstructor(lesson.getInstructor());
-							System.out.println("Dans getAllBookings : Lesson liée au booking : " + lesson.toString()
-									+ "\ninstructeur" + lesson.getInstructor());
 							break;
 						}
 					}

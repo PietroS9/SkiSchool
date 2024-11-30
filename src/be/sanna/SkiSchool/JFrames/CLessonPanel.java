@@ -105,6 +105,7 @@ public class CLessonPanel extends JPanel {
 		for(Accreditation accr : accrs) {
 			cBox_info_Accreditations.addItem(accr);
 		}
+		cBox_info_Accreditations.setSelectedIndex(-1);
 		
 		cBox_info_Accreditations.addActionListener(new ActionListener() {
 			@Override
@@ -342,7 +343,7 @@ public class CLessonPanel extends JPanel {
 	}
 	
 	private void resetFields() {
-	    cBox_info_Accreditations.setSelectedIndex(0);
+	    cBox_info_Accreditations.setSelectedIndex(-1);
 	    cBox_info_LessonType.removeAllItems();
 	    cBox_info_InstructorName.removeAllItems();
 	    lessonDateChooser.setDate(null);
@@ -354,6 +355,6 @@ public class CLessonPanel extends JPanel {
 	    rdbtn_AM.setSelected(true);
 	    rdbtn_duration_1.setSelected(true);
 	    
-	    JOptionPane.showMessageDialog(this, "Les champs ont été réinitialisés.", "Information", JOptionPane.INFORMATION_MESSAGE);
+	    JOptionPane.showMessageDialog(this, "Le cours à été créé avec succès.", "Information", JOptionPane.INFORMATION_MESSAGE);
 	}
 }

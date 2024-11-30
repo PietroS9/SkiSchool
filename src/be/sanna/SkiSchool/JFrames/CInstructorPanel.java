@@ -211,6 +211,14 @@ public class CInstructorPanel extends JPanel {
             return;
         }
         
+        if(birthDate.isAfter(LocalDate.now())) {
+        	JOptionPane.showMessageDialog(null, 
+                    "Le date de naissance est incohérente.", 
+                    "Erreur", 
+                    JOptionPane.ERROR_MESSAGE);
+                return;
+        }
+        
         LocalDate today = LocalDate.now();
         Period age = Period.between(birthDate, today);
         if (age.getYears() < 18) {

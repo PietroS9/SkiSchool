@@ -1,6 +1,5 @@
 package be.sanna.SkiSchool.POJO;
 
-import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 

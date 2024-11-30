@@ -188,6 +188,4 @@ public class Lesson {
 	public void deleteToDB(LessonDAO dao) {
 		dao.deleteToDB(this);
 	}
-	
-	
 }
